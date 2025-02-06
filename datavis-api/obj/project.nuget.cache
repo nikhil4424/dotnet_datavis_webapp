@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "gJ0gmY0/V2whYzCjeHUC9r9BQqyTb0sDJqrNo8GYuUMsg2fA+68eCEXaEdHx/c9ASHWJIvIR2cBD7vUpzGQG2g==",
+  "success": true,
+  "projectFilePath": "/home/una-fedora/Documents/Programmeren/Werk/WorkingTalent/dotnet_datavis_webapp/datavis-api/datavis-api.csproj",
+  "expectedPackageFiles": [
+    "/home/una-fedora/.nuget/packages/microsoft.aspnetcore.openapi/8.0.12/microsoft.aspnetcore.openapi.8.0.12.nupkg.sha512",
+    "/home/una-fedora/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/home/una-fedora/.nuget/packages/microsoft.openapi/1.6.14/microsoft.openapi.1.6.14.nupkg.sha512",
+    "/home/una-fedora/.nuget/packages/swashbuckle.aspnetcore/6.6.2/swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
+    "/home/una-fedora/.nuget/packages/swashbuckle.aspnetcore.swagger/6.6.2/swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
+    "/home/una-fedora/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.6.2/swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
+    "/home/una-fedora/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.6.2/swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+  ],
+  "logs": []
+}
