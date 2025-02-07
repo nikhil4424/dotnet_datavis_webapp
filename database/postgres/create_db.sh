@@ -8,7 +8,8 @@ DB_MODEL_FILE="schema.sql"
 
 echo "about to create db..."
 # Create database
-sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
+sudo -u postgres psql -c "CREATE DATABASE $DB_NAME OWNER postgres;"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO postgres"
 echo "database created."
 
 
