@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.crop_yield
     crop_id integer NOT NULL,
     year_id integer NOT NULL,
     value numeric,
-
+    UNIQUE(country_id, crop_id, year_id),
     FOREIGN KEY (country_id) REFERENCES public.country (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,

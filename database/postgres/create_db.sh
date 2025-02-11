@@ -7,6 +7,7 @@ DB_PASSWORD="postgres"
 DB_MODEL_FILE="schema.sql"
 DATA_SQL_FILE="data.sql"
 
+
 echo "about to create db..."
 # Create database
 sudo -u postgres psql -c "CREATE DATABASE $DB_NAME OWNER postgres;"
@@ -27,4 +28,7 @@ sudo -u postgres psql -d $DB_NAME -c "\copy year(value) FROM 'year.csv' DELIMITE
 # Initialize crop data from csv
 sudo -u postgres psql -d $DB_NAME -c "\copy crop(name) FROM 'crop.csv' DELIMITER ',' CSV HEADER;"
 # Initialize crop yield data
-sudo -u postgres psql -d $DB_NAME -c "\copy crop_yield(country_id, crop_id, year_id, value) FROM 'crop_yield.csv' DELIMITER ',' CSV HEADER;"
+sudo -u postgres psql -d $DB_NAME -c "\copy crop_yield(country_id, year_id, crop_id, value) FROM 'crop_yield.csv' DELIMITER ',' CSV HEADER;"
+
+# Create crop yield view
+sudo -u postgres psql -d $DB_NAME -f view_yield.sql
