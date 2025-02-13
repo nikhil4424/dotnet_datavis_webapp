@@ -1,4 +1,4 @@
-CREATE VIEW yields AS
+CREATE VIEW yields_view AS
     SELECT
         cy.id,c.name AS crop,
         co.name AS country,
