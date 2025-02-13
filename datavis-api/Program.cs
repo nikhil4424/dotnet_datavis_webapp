@@ -1,22 +1,29 @@
 
-namespace datavis_api;
-using DatavisApi.Models;
+using datavis_api.Interfaces;
+using datavis_api.Repository;
 using DatavisApi.Data;
 using Microsoft.EntityFrameworkCore;
+
+namespace datavis_api;
 
 public class Program
 {
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        // DbContext db = new CropYieldsOwidContext();
-        using CropYieldsOwidContext dbcontext = new CropYieldsOwidContext();
 
         // Add services to the container.
 
         builder.Services.AddControllers();
+
+        builder.Services.AddDbContext<CropDataContext>(
+            options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+        builder.Services.AddScoped<ICropRepository, CropRepository>();
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
+
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
@@ -35,7 +42,6 @@ public class Program
 
         app.MapControllers();
 
-        foreach (Country country in dbcontext.Countries)
-            app.Run();
+        app.Run();
     }
 }

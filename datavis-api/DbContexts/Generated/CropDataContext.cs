@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using DatavisApi.Models;
+﻿using DatavisApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatavisApi.Data;
 
-public partial class CropYieldsOwidContext : DbContext
+public partial class CropDataContext : DbContext
 {
-    public CropYieldsOwidContext()
-    {
-    }
-
-    public CropYieldsOwidContext(DbContextOptions<CropYieldsOwidContext> options)
+    public CropDataContext(DbContextOptions<CropDataContext> options)
         : base(options)
     {
     }
@@ -25,10 +19,6 @@ public partial class CropYieldsOwidContext : DbContext
     public virtual DbSet<Year> Years { get; set; }
 
     public virtual DbSet<YieldsView> YieldsViews { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=crop_yields_owid;Username=postgres;Password=postgres");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -54,7 +44,7 @@ public partial class CropYieldsOwidContext : DbContext
 
             entity.HasOne(d => d.Country).WithMany(p => p.CropYields).HasConstraintName("crop_yield_country_id_fkey");
 
-            entity.HasOne(d => d.Crop).WithMany(p => p.CropYields).HasConstraintName("crop_yield_crop_id_fkey");
+            // entity.HasOne(d => d.Crop).WithMany(p => p.CropYields).HasConstraintName("crop_yield_crop_id_fkey");
 
             entity.HasOne(d => d.Year).WithMany(p => p.CropYields).HasConstraintName("crop_yield_year_id_fkey");
         });
