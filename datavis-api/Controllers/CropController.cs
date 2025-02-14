@@ -6,7 +6,7 @@ namespace datavis_api.Controllers;
 
 [Route("crops")]
 [ApiController]
-public class CropController : Controller
+public class CropController : ControllerBase
 {
     private readonly ICropRepository _cropRepository;
 
