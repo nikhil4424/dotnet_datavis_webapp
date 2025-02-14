@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
+import { BaseChartDirective } from 'ng2-charts';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
@@ -9,4 +9,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'datavis-frontend';
+
 }
