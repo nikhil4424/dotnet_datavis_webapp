@@ -44,7 +44,7 @@ public partial class CropDataContext : DbContext
 
             entity.HasOne(d => d.Country).WithMany(p => p.CropYields).HasConstraintName("crop_yield_country_id_fkey");
 
-            // entity.HasOne(d => d.Crop).WithMany(p => p.CropYields).HasConstraintName("crop_yield_crop_id_fkey");
+            entity.HasOne(d => d.Crop).WithMany(p => p.CropYields).HasConstraintName("crop_yield_crop_id_fkey");
 
             entity.HasOne(d => d.Year).WithMany(p => p.CropYields).HasConstraintName("crop_yield_year_id_fkey");
         });
