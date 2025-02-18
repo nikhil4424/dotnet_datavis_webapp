@@ -6,18 +6,16 @@ namespace DatavisApi.Interfaces;
 public interface ICropRepository
 {
     public bool CropIdExists(int cropId);
-    ICollection<Crop> GetCrops();
+    IOrderedQueryable<Crop> GetCrops();
     public bool CountryIdExists(int countryId);
-    ICollection<Country> GetCountries();
+    IOrderedQueryable<Country> GetCountries();
     public bool YearIdExists(int yearId);
-    ICollection<Year> GetYears();
+    IOrderedQueryable<Year> GetYears();
 
-    ICollection<CropYield> GetCropYields();
-    ICollection<CropYieldDto> GetCropYieldsByCountry(int countryId);
-    ICollection<CropYieldDto> GetCropYieldsByYear(int yearId);
-    ICollection<CropYieldDto> GetCropYieldsByCrop(int cropId);
-    ICollection<CropYieldDto> GetCropYieldsByCountryAndYear(int countryId, int yearId);
-    ICollection<CropYieldDto> GetCropYieldsByCountryAndCrop(int countryId, int cropId);
-    ICollection<CropYieldDto> GetCropYieldsByYearAndCrop(int yearId, string cropId);
-    ICollection<CropYieldDto> GetCropYieldsByCountryYearAndCrop(int countryId, int yearId, int cropId);
+    IOrderedQueryable<CropYield> GetCropYieldsByCountry(int countryId);
+    IOrderedQueryable<CropYield> GetCropYieldsByYear(int yearId);
+    IOrderedQueryable<CropYield> GetCropYieldsByCrop(int cropId);
+    IOrderedQueryable<CropYield> GetCropYieldsByCountryAndYear(int countryId, int yearId);
+    IOrderedQueryable<CropYield> GetCropYieldsByCountryAndCrop(int countryId, int cropId);
+    IOrderedQueryable<CropYield> GetCropYieldsByYearAndCrop(int yearId, string cropId);
 }
