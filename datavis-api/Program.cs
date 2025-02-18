@@ -21,7 +21,7 @@ public class Program
 
         builder.Services.AddScoped<ICropRepository, CropRepository>();
 
-        builder.Services.AddAutoMapper(typeof(Program));
+        // builder.Services.AddAutoMapper(typeof(Program));
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
