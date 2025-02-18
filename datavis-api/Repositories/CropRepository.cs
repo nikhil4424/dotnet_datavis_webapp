@@ -1,9 +1,9 @@
-using datavis_api.Dto;
-using datavis_api.Interfaces;
+using DatavisApi.Dto;
+using DatavisApi.Interfaces;
 using DatavisApi.Data;
 using DatavisApi.Models;
 
-namespace datavis_api.Repository;
+namespace DatavisApi.Repository;
 
 public class CropRepository : ICropRepository
 {

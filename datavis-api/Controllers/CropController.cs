@@ -1,10 +1,10 @@
 using AutoMapper;
-using datavis_api.Dto;
-using datavis_api.Interfaces;
+using DatavisApi.Dto;
+using DatavisApi.Interfaces;
 using DatavisApi.Data;
 using DatavisApi.Models;
 using Microsoft.AspNetCore.Mvc;
-namespace datavis_api.Controllers;
+namespace DatavisApi.Controllers;
 
 [Route("crop-api")]
 [ApiController]
@@ -31,18 +31,7 @@ public class CropController : ControllerBase
         return Ok(crops);
     }
 
-    // TODO: put in separate countries controller
-    [HttpGet("countries")]
-    [ProducesResponseType(200, Type = typeof(ICollection<CountryDto>))]
-    public IActionResult GetCountries()
-    {
-        List<CountryDto> countries = _mapper.Map<List<CountryDto>>(_cropRepository.GetCountries());
 
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        return Ok(countries);
-    }
 
     // TODO: put in separate years controller
     [HttpGet("years")]

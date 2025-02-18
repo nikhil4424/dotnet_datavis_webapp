@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace datavis_api.Controllers;
+namespace DatavisApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]

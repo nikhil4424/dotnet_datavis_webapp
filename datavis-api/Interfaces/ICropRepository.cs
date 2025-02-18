@@ -1,7 +1,7 @@
-using datavis_api.Dto;
+using DatavisApi.Dto;
 using DatavisApi.Models;
 
-namespace datavis_api.Interfaces;
+namespace DatavisApi.Interfaces;
 
 public interface ICropRepository
 {

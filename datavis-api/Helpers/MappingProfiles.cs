@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DatavisApi.Models;
-using datavis_api.Dto;
+using DatavisApi.Dto;
 
-namespace datavis_api.Helpers
+namespace DatavisApi.Helpers
 {
     public class MappingProfiles : Profile
     {

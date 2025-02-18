@@ -1,10 +1,10 @@
 
-using datavis_api.Interfaces;
-using datavis_api.Repository;
+using DatavisApi.Interfaces;
+using DatavisApi.Repository;
 using DatavisApi.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace datavis_api;
+namespace DatavisApi;
 
 public class Program
 {

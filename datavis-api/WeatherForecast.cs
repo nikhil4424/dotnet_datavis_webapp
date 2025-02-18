@@ -1,4 +1,4 @@
-namespace datavis_api;
+namespace DatavisApi;
 
 public class WeatherForecast
 {
