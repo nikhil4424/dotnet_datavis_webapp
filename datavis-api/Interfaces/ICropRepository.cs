@@ -5,11 +5,11 @@ namespace DatavisApi.Interfaces;
 
 public interface ICropRepository
 {
-    public bool CropIdExists(int cropId);
+    bool CropIdExists(int cropId);
     IOrderedQueryable<Crop> GetCrops();
-    public bool CountryIdExists(int countryId);
+    bool CountryIdExists(int countryId);
     IOrderedQueryable<Country> GetCountries();
-    public bool YearIdExists(int yearId);
+    bool YearIdExists(int yearId);
     IOrderedQueryable<Year> GetYears();
 
     IOrderedQueryable<CropYield> GetCropYieldsByCountry(int countryId);
@@ -18,4 +18,8 @@ public interface ICropRepository
     IOrderedQueryable<CropYield> GetCropYieldsByCountryAndYear(int countryId, int yearId);
     IOrderedQueryable<CropYield> GetCropYieldsByCountryAndCrop(int countryId, int cropId);
     IOrderedQueryable<CropYield> GetCropYieldsByYearAndCrop(int yearId, string cropId);
+
+
+    ICollection<CropYieldDto> GetCropYieldsByCountryAndCropCollection(int countryId, int cropId);
+
 }

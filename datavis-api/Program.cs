@@ -3,6 +3,7 @@ using DatavisApi.Interfaces;
 using DatavisApi.Repository;
 using DatavisApi.Data;
 using Microsoft.EntityFrameworkCore;
+using DatavisApi.Services;
 
 namespace DatavisApi;
 
@@ -20,8 +21,7 @@ public class Program
             options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         builder.Services.AddScoped<ICropRepository, CropRepository>();
-
-        // builder.Services.AddAutoMapper(typeof(Program));
+        builder.Services.AddScoped<CropService>();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

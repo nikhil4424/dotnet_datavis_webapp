@@ -2,6 +2,7 @@ using DatavisApi.Dto;
 using DatavisApi.Interfaces;
 using DatavisApi.Data;
 using DatavisApi.Models;
+using Microsoft.EntityFrameworkCore;
 namespace DatavisApi.Repository;
 
 public class CropRepository : ICropRepository
@@ -61,47 +62,62 @@ public class CropRepository : ICropRepository
     {
         return _dataContext.CropYields.Where(cropYield =>
             cropYield.Crop.Id == cropId)
-            // .Select(cy => new CropYieldDto
-            // {
-            //     Id = cy.Id,
-            //     Country = cy.Country.Name,
-            //     Crop = cy.Crop.Name,
-            //     Year = cy.Year.Value,
-            //     Value = cy.Value
-            // })
             .OrderBy(cy => cy.Id);
     }
 
     public IOrderedQueryable<CropYield> GetCropYieldsByCountryAndYear(int countryId, int yearId)
     {
-        return _dataContext.CropYields.Where(cropYield =>
+        IOrderedQueryable<CropYield> cropYields = _dataContext.CropYields
+        .Include(cy => cy.Country)
+        .Include(cy => cy.Crop)
+        .Include(cy => cy.Year)
+        .Where(cropYield =>
             cropYield.Country.Id == countryId &&
             cropYield.Year.Id == yearId)
-            // .Select(cy => new CropYieldDto
-            // {
-            //     Id = cy.Id,
-            //     Country = cy.Country.Name,
-            //     Crop = cy.Crop.Name,
-            //     Year = cy.Year.Value,
-            //     Value = cy.Value
-            // })
-            .OrderBy(cy => cy.Id);
+        .OrderBy(cy => cy.Year.Value);
+
+        return cropYields;
     }
 
     public IOrderedQueryable<CropYield> GetCropYieldsByCountryAndCrop(int countryId, int cropId)
     {
-        return _dataContext.CropYields.Where(cropYield =>
+        IOrderedQueryable<CropYield> cropYields = _dataContext.CropYields
+            .Include(cy => cy.Country)
+            .Include(cy => cy.Crop)
+            .Include(cy => cy.Year)
+            .Where(cy =>
+                cy.Country.Id == countryId &&
+                cy.Crop.Id == cropId
+            ).OrderBy(cy => cy.Year.Value);
+
+        return cropYields;
+    }
+
+    public ICollection<CropYieldDto> GetCropYieldsByCountryAndCropCollection(int countryId, int cropId)
+    {
+        IQueryable<CropYieldDto> cropYields = _dataContext.CropYields
+        .Include(cy => cy.Country)
+        .Include(cy => cy.Crop)
+        .Include(cy => cy.Year)
+        .Where(cropYield =>
             cropYield.Country.Id == countryId &&
             cropYield.Crop.Id == cropId)
-            // .Select(cy => new CropYieldDto
-            // {
-            //     Id = cy.Id,
-            //     Country = cy.Country.Name,
-            //     Crop = cy.Crop.Name,
-            //     Year = cy.Year.Value,
-            //     Value = cy.Value
-            // })
-            .OrderBy(cy => cy.Id);
+            .OrderBy(cy => cy.Id)
+            .Select
+            (
+                cy => new CropYieldDto
+                (
+                    cropId,
+                    cy.Country.Name,
+                    cy.Crop.Name,
+                    cy.Year.Value,
+                    cy.Value
+                )
+            );
+
+        List<CropYieldDto> cropYieldsList = cropYields.ToList();
+
+        return cropYieldsList;
     }
 
     public IOrderedQueryable<CropYield> GetCropYieldsByYearAndCrop(int yearId, string cropId)

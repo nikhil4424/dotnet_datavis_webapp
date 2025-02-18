@@ -1,61 +1,57 @@
-using AutoMapper;
 using DatavisApi.Dto;
-using DatavisApi.Interfaces;
-using DatavisApi.Data;
-using DatavisApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using DatavisApi.Services;
+
 namespace DatavisApi.Controllers;
 
 [Route("crop-api")]
 [ApiController]
 public class CropController : ControllerBase
 {
-    private readonly ICropRepository _cropRepository;
-    private readonly IMapper _mapper;
+    private CropService _cropService;
 
-    public CropController(ICropRepository cropRepository, IMapper mapper)
+    public CropController(CropService cropService)
     {
-        _cropRepository = cropRepository;
-        _mapper = mapper;
+        _cropService = cropService;
     }
+
 
     [HttpGet("crops")]
     [ProducesResponseType(200, Type = typeof(ICollection<CropDto>))]
     public IActionResult GetCrops()
     {
-        List<CropDto> crops = _mapper.Map<List<CropDto>>(_cropRepository.GetCrops());
+        ICollection<CropDto> cropsDto = _cropService.GetCropsDto();
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(crops);
+        return Ok(cropsDto);
     }
 
 
-
-    // TODO: put in separate years controller
     [HttpGet("years")]
     [ProducesResponseType(200, Type = typeof(ICollection<YearDto>))]
     public IActionResult GetYears()
     {
-        List<YearDto> years = _mapper.Map<List<YearDto>>(_cropRepository.GetYears());
+        ICollection<YearDto> yearsDto = _cropService.GetYearsDto();
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(years);
+        return Ok(yearsDto);
     }
 
     [HttpGet("cropyields/{countryId}/{cropId}")]
     [ProducesResponseType(200, Type = typeof(ICollection<CropYieldDto>))]
     public IActionResult GetCropYieldsByCountryAndCrop(int countryId, int cropId)
     {
-        ICollection<CropYieldDto> cropYields = _cropRepository.GetCropYieldsByCountryAndCrop(countryId, cropId);
+
+        ICollection<CropYieldDto> cropYieldsDto = _cropService.GetCropYieldsDtoByCountryAndCrop(countryId, cropId);
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(cropYields);
+        return Ok(cropYieldsDto);
     }
 
 }
