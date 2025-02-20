@@ -1,9 +1,10 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import { CountrySelectorComponent } from "../country-selector/country-selector.component";
 Chart.register(...registerables)
 @Component({
   selector: 'app-chart',
-  imports: [],
+  imports: [CountrySelectorComponent],
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.css'
 })

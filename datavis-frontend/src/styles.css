@@ -4,3 +4,8 @@
   width: 80%;
   border: 3px solid green;
 }
+
+.container {
+  display: flex;
+  height: 100%;
+}

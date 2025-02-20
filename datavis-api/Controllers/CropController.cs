@@ -15,6 +15,17 @@ public class CropController : ControllerBase
         _cropService = cropService;
     }
 
+    [HttpGet("countries")]
+    [ProducesResponseType(200, Type = typeof(ICollection<CountryDto>))]
+    public IActionResult GetCountries()
+    {
+        ICollection<CountryDto> countriesDto = _cropService.GetCountriesDto();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        return Ok(countriesDto);
+    }
 
     [HttpGet("crops")]
     [ProducesResponseType(200, Type = typeof(ICollection<CropDto>))]

@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './country-selector.component.css'
 })
 export class CountrySelectorComponent {
+  private countries:Array<string> = ['Afghanistan', 'Albania', 'Netherlands', 'Germany'];
 
+  // function HandleData(countryNames: Array<string>)
+  // {
+  //   return 0;
+  // }
+  
 }

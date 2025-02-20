@@ -13,6 +13,17 @@ namespace DatavisApi.Services
             _cropRepository = cropRepository;
         }
 
+        public ICollection<CountryDto> GetCountriesDto()
+        {
+            IOrderedQueryable<Country> countries = _cropRepository.GetCountries();
+
+            ICollection<CountryDto> countriesDto = countries.Select(country =>
+                Helpers.ModelToDto.CountryToDto(country))
+                .ToList();
+
+            return countriesDto;
+        }
+
         public ICollection<CropDto> GetCropsDto()
         {
             IOrderedQueryable<Crop> crops = _cropRepository.GetCrops();
