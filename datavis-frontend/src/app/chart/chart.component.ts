@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
 Chart.register(...registerables)
 @Component({
   selector: 'app-chart',
@@ -9,41 +9,37 @@ Chart.register(...registerables)
 })
 
 export class ChartComponent implements AfterViewInit {
-  ngAfterViewInit(): void {
-
-    if (typeof(document) !== 'undefined')
+  // TODO later through API
+  private x_labels = ['2000', '2001', '2002', '2003']
+  private datasets = 
+    [
+      {
+        label: 'Afghanistan',
+        data: [1.5, 1., 2., 3]
+      }
+    ]
+  
+  private data = 
     {
-      const chartHtml = document.getElementById('chart') as HTMLCanvasElement;
-
-      new Chart(chartHtml,
-        {
-          type: 'bar',
-          data: 
-          {
-            labels: ['Almonds', 'Peanuts', 'Apples'],
-            datasets: 
-            [
-              {
-                label: 'Quantity',
-                data: [100, 50, 20],
-              }
-            ]
-          },
-          options:
-          {
-            scales: 
-            {
-              y: 
-              {
-                beginAtZero: true
-              }
-            }
-          }
-        }
-      );
-
+      labels: this.x_labels,
+      datasets: this.datasets
     }
 
-    
+  private config:ChartConfiguration = 
+  {
+    type: 'line',
+    data: this.data
+  }
+
+  ngAfterViewInit(): void {
+    if (typeof(document) !== 'undefined')
+    {
+      const chartHtml:HTMLCanvasElement = document.getElementById('chart') as HTMLCanvasElement;
+
+      new Chart(
+        chartHtml,
+        this.config
+      );
+    }
   }
 }
