@@ -1,10 +1,20 @@
 <div id="country-selector-box">
     <div id="country-selector">
-        <p>country-selector works!</p>
+        <div class="country-selector-header">
+            <h3>Select countries</h3>
+        </div>
 
-        <form onsubmit="">
-        
-        </form>
+        <!-- <form>
+            <div *ngFor="let country of countries">
+                <input type="checkbox" value="{{country.id}}"> {{country.name}}<br>
+            </div>
+        </form> -->
+
+        <div *ngFor="let country of countries">
+            <label>
+                <input type="checkbox" value={{country.id}}> {{country.name}}<br>
+            </label>
+        </div>
 
 
     </div>

@@ -1,22 +1,22 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, } from '@angular/core';
 import { ICountry } from '../interfaces/icountry';
 import { DataRequestService } from '../services/data-request.service';
 import { Observable } from 'rxjs';
-
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-country-selector',
-  imports: [],
+  imports: [NgFor],
   templateUrl: './country-selector.component.html',
   styleUrl: './country-selector.component.css'
 })
 
 export class CountrySelectorComponent implements OnInit { 
   // private countries:Array<string> = ['Afghanistan', 'Albania', 'Netherlands', 'Germany'];
-  private countries: ICountry[] = [];
+  protected countries: ICountry[] = [];
   private selectedCountries: ICountry[] = [];
 
-  @Output() selectedCountriesEvent = new EventEmitter<ICountry[]>();
+  @Output() countriesSelectedEvent = new EventEmitter<ICountry[]>();
 
   constructor(private dataRequestService: DataRequestService) { }
 
@@ -25,8 +25,10 @@ export class CountrySelectorComponent implements OnInit {
     let countriesObservable: Observable<ICountry[]> = this.dataRequestService.GetCountries();
     countriesObservable.subscribe((data: ICountry[]) => {
       this.countries = data;
-      console.log(data);
     });
+  }
 
+  protected submitCountries(): void {
+    this.countriesSelectedEvent.emit(this.selectedCountries);
   }
 }

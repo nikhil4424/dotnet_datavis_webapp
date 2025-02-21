@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataRequestService {
 
   readonly ROOT_URL = "http://localhost:5065/crop-api"
