@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
 })
 export class DataRequestService {
 
-  readonly ROOT_URL = "http://localhost:5065"
+  readonly ROOT_URL = "http://localhost:5065/crop-api"
   
   constructor(private http: HttpClient) { }
 
-  public GetCountries(): Observable<ICountry>
+  public GetCountries(): Observable<ICountry[]>
   {
-    return this.http.get<ICountry>(this.ROOT_URL + "/countries");
+    return this.http.get<ICountry[]>(this.ROOT_URL + "/countries");
   }
   
 }

@@ -1,0 +1,6 @@
+#country-selector-box {
+  height: 100%;
+  flex: 1;
+  border: 3px solid orange;
+  overflow-y: scroll;
+}
