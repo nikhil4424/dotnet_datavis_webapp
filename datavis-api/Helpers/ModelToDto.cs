@@ -25,15 +25,6 @@ namespace DatavisApi.Helpers
 
         public static CropYieldDto CropYieldToDto(CropYield cropYield)
         {
-            // CropYieldDto cropYieldDto = new
-            // (
-            //     cropYield.Id,
-            //     cropYield.Country.Name,
-            //     cropYield.Crop.Name,
-            //     cropYield.Year.Value,
-            //     cropYield.Value
-            // );
-
             return new CropYieldDto
             (
                 cropYield.Id,

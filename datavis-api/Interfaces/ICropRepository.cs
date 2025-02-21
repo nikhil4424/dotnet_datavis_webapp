@@ -1,4 +1,3 @@
-using DatavisApi.Dto;
 using DatavisApi.Models;
 
 namespace DatavisApi.Interfaces;
