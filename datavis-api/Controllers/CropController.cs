@@ -65,4 +65,17 @@ public class CropController : ControllerBase
         return Ok(cropYieldsDto);
     }
 
+    // [HttpGet("cropyields/{countryIds}/{cropId}")]
+    // [ProducesResponseType(200, Type = typeof(ICollection<CropYieldDto>))]
+    // public IActionResult GetCropYieldsByCountriesAndCrop(int[] countryIds, int cropId)
+    // {
+
+    //     ICollection<CropYieldDto> cropYieldsDto = _cropService.GetCropYieldsDtoByCountriesAndCrop(countryIds, cropId);
+
+    //     if (!ModelState.IsValid)
+    //         return BadRequest(ModelState);
+
+    //     return Ok(cropYieldsDto);
+    // }
+
 }

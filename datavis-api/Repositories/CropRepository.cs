@@ -93,6 +93,20 @@ public class CropRepository : ICropRepository
         return cropYields;
     }
 
+    public IOrderedQueryable<CropYield> GetCropYieldsByCountriesAndCrop(int[] countryIds, int cropId)
+    {
+        IOrderedQueryable<CropYield> cropYields = _dataContext.CropYields
+            .Include(cy => cy.Country)
+            .Include(cy => cy.Crop)
+            .Include(cy => cy.Year)
+            .Where(cy =>
+                countryIds.Contains(cy.Country.Id) &&
+                cy.Crop.Id == cropId
+            ).OrderBy(cy => cy.Year.Value);
+
+        return cropYields;
+    }
+
     public IOrderedQueryable<CropYield> GetCropYieldsByYearAndCrop(int yearId, string cropId)
     {
         throw new NotImplementedException();

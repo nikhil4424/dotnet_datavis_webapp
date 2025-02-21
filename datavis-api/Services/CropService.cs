@@ -56,5 +56,16 @@ namespace DatavisApi.Services
 
             return cropYieldsDto;
         }
+
+        public ICollection<CropYieldDto> GetCropYieldsDtoByCountriesAndCrop(int[] countryIds, int cropId)
+        {
+            IOrderedQueryable<CropYield> cropYields = _cropRepository.GetCropYieldsByCountriesAndCrop(countryIds, cropId);
+
+            ICollection<CropYieldDto> cropYieldsDto = cropYields
+                .Select(cropYield => Helpers.ModelToDto.CropYieldToDto(cropYield))
+                .ToList();
+
+            return cropYieldsDto;
+        }
     }
 }
