@@ -52,30 +52,17 @@ public class CropController : ControllerBase
         return Ok(yearsDto);
     }
 
-    [HttpGet("cropyields/{countryId}/{cropId}")]
+    // Main endpoint for crop yield data; returns crop yield data for given countries and crop
+    [HttpGet("cropyields/countries/crop")]
     [ProducesResponseType(200, Type = typeof(ICollection<CropYieldDto>))]
-    public IActionResult GetCropYieldsByCountryAndCrop(int countryId, int cropId)
+    public IActionResult GetCropYieldsByCountriesAndCrop([FromQuery] int[] countryIds, [FromQuery] int cropId)
     {
 
-        ICollection<CropYieldDto> cropYieldsDto = _cropService.GetCropYieldsDtoByCountryAndCrop(countryId, cropId);
+        ICollection<CropYieldDto> cropYieldsDto = _cropService.GetCropYieldsDtoByCountriesAndCrop(countryIds, cropId);
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         return Ok(cropYieldsDto);
     }
-
-    // [HttpGet("cropyields/{countryIds}/{cropId}")]
-    // [ProducesResponseType(200, Type = typeof(ICollection<CropYieldDto>))]
-    // public IActionResult GetCropYieldsByCountriesAndCrop(int[] countryIds, int cropId)
-    // {
-
-    //     ICollection<CropYieldDto> cropYieldsDto = _cropService.GetCropYieldsDtoByCountriesAndCrop(countryIds, cropId);
-
-    //     if (!ModelState.IsValid)
-    //         return BadRequest(ModelState);
-
-    //     return Ok(cropYieldsDto);
-    // }
-
 }
