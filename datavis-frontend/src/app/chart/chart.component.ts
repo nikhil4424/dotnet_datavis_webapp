@@ -1,6 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { Chart, ChartConfiguration, registerables } from 'chart.js';
 import { CountrySelectorComponent } from "../country-selector/country-selector.component";
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import { ICountry } from '../interfaces/icountry';
 Chart.register(...registerables)
 @Component({
   selector: 'app-chart',
@@ -19,6 +20,7 @@ export class ChartComponent implements AfterViewInit {
         data: [1.5, 1., 2., 3]
       }
     ]
+
   
   private data = 
     {
@@ -32,6 +34,12 @@ export class ChartComponent implements AfterViewInit {
     data: this.data
   }
 
+  private yield_data: any 
+
+  protected OnCountriesSelected(countries: ICountry[]): void {
+    // TODO call ChartDataHandler with countries and crop type to get chart data
+  }
+
   ngAfterViewInit(): void {
     if (typeof(document) !== 'undefined')
     {
@@ -43,4 +51,5 @@ export class ChartComponent implements AfterViewInit {
       );
     }
   }
+
 }

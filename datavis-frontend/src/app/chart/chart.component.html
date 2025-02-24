@@ -1,7 +1,7 @@
 <div class="container">
 
     <div id="country-selector">
-        <app-country-selector/>
+        <app-country-selector (countriesSelectedEvent)="OnCountriesSelected($event)" />
     </div>
 
     <div class="canvasContainer">

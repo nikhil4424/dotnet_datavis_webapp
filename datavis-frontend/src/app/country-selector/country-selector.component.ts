@@ -12,8 +12,7 @@ import { NgFor } from '@angular/common';
 })
 
 export class CountrySelectorComponent implements OnInit { 
-  // private countries:Array<string> = ['Afghanistan', 'Albania', 'Netherlands', 'Germany'];
-  protected countries: ICountry[] = [];
+  protected selectableCountries: ICountry[] = [];
   private selectedCountries: ICountry[] = [];
 
   @Output() countriesSelectedEvent = new EventEmitter<ICountry[]>();
@@ -21,14 +20,22 @@ export class CountrySelectorComponent implements OnInit {
   constructor(private dataRequestService: DataRequestService) { }
 
   ngOnInit(): void {
-
+    // Initialize selectableCountries with data from API
     let countriesObservable: Observable<ICountry[]> = this.dataRequestService.GetCountries();
     countriesObservable.subscribe((data: ICountry[]) => {
-      this.countries = data;
+      this.selectableCountries = data;
     });
   }
 
-  protected submitCountries(): void {
+  protected submitCountries(event: Event): void {
+    // Prevent form submission and url change
+    event.preventDefault();
+
+    var form = event.target as HTMLFormElement;
+    var formData = new FormData(form);
+    var selectedCountryIds = formData.getAll('countries');
+    console.log(selectedCountryIds);
     this.countriesSelectedEvent.emit(this.selectedCountries);
+    // return selectedCountryIds; 
   }
 }
