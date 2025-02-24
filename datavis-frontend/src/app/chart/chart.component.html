@@ -1,10 +1,14 @@
 <div class="container">
 
-    <div id="country-selector">
+    <div id="selectors-container">
+
         <app-country-selector (countriesSelectedEvent)="OnCountriesSelected($event)" />
+
+        <app-crop-selector />
+        
     </div>
 
-    <div class="canvasContainer">
+    <div class="canvas-container">
         <canvas id="chart"></canvas>
     </div>
 </div>

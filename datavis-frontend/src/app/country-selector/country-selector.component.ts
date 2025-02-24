@@ -34,8 +34,7 @@ export class CountrySelectorComponent implements OnInit {
     var form = event.target as HTMLFormElement;
     var formData = new FormData(form);
     var selectedCountryIds = formData.getAll('countries');
-    console.log(selectedCountryIds);
+    console.log("from country-selector.submitCountries: " + selectedCountryIds);
     this.countriesSelectedEvent.emit(this.selectedCountries);
-    // return selectedCountryIds; 
   }
 }
