@@ -19,8 +19,10 @@ export class DataRequestService {
     return this.http.get<ICountry[]>(this.ROOT_URL + "/countries");
   }
 
-  public GetCropYieldsByCountriesAndCrop(countryIds: number[], cropId: number): Observable<ICropYield>{
-    return this.http.get<ICropYield>(this.GenerateCropYieldRequestByCountriesAndCrop(countryIds, cropId));
+  public GetCropYieldsByCountriesAndCrop(countryIds: number[], cropId: number): Observable<ICropYield[]>
+  {
+    var requestUrl: string = this.GenerateCropYieldRequestByCountriesAndCrop(countryIds, cropId);
+    return this.http.get<ICropYield[]>(requestUrl);
   }
 
 
@@ -33,7 +35,6 @@ export class DataRequestService {
     }
 
     requestUrl += "cropId=" + cropId;
-    console.log(requestUrl);
 
     return requestUrl;
   }

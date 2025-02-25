@@ -13,18 +13,21 @@ import { NgFor } from '@angular/common';
 
 export class CountrySelectorComponent implements OnInit { 
   protected selectableCountries: ICountry[] = [];
-  private selectedCountries: ICountry[] = [];
 
-  @Output() countriesSelectedEvent = new EventEmitter<ICountry[]>();
+  @Output() countriesSelectedEvent = new EventEmitter<number[]>();
 
   constructor(private dataRequestService: DataRequestService) { }
 
   ngOnInit(): void {
-    // Initialize selectableCountries with data from API
-    let countriesObservable: Observable<ICountry[]> = this.dataRequestService.GetCountries();
-    countriesObservable.subscribe((data: ICountry[]) => {
+    // Initialize selectableCountries with data from API, to be used in html country-selector.component.html
+    try{
+      let countriesObservable: Observable<ICountry[]> = this.dataRequestService.GetCountries();
+      countriesObservable.subscribe((data: ICountry[]) => {
       this.selectableCountries = data;
     });
+    } catch (error) {
+      console.error("Error in country-selector.component.ngOnInit: " + error);
+    }
   }
 
   protected submitCountries(event: Event): void {
@@ -33,8 +36,8 @@ export class CountrySelectorComponent implements OnInit {
 
     var form = event.target as HTMLFormElement;
     var formData = new FormData(form);
-    var selectedCountryIds = formData.getAll('countries');
-    console.log("from country-selector.submitCountries: " + selectedCountryIds);
-    this.countriesSelectedEvent.emit(this.selectedCountries);
+    // convert formdata to number array
+    var selectedCountryIds: number[] = formData.getAll('countries').map((id) => parseInt(id as string));
+    this.countriesSelectedEvent.emit(selectedCountryIds);
   }
 }

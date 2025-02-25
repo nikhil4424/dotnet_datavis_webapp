@@ -1,10 +1,12 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { CountrySelectorComponent } from "../country-selector/country-selector.component";
-import { Chart, ChartConfiguration, DatasetController, registerables } from 'chart.js';
 import { ICountry } from '../interfaces/icountry';
 import { DataRequestService } from '../services/data-request.service';
 import { ICropYield } from '../interfaces/icrop-yield';
 import { CropSelectorComponent } from "../crop-selector/crop-selector.component";
+import { Observable } from 'rxjs';
+
+import { Chart, ChartConfiguration, DatasetController, registerables } from 'chart.js';
 Chart.register(...registerables)
 @Component({
   selector: 'app-chart',
@@ -42,10 +44,16 @@ export class ChartComponent implements AfterViewInit {
 
   private yield_data: any 
 
-  protected OnCountriesSelected(countries: ICountry[]): void {
-    // TODO call ChartDataHandler with countries and crop type to get chart data
-    var cropYields: ICropYield = this.dataRequestService.GetCropYieldsByCountriesAndCrop([1, 2], 1);
-    console.log("chart-component.OnCountriesSelected: " + cropYields);
+  protected OnCountriesSelected(countryIds: number[]): void {
+    var cropYieldsObservable: Observable<ICropYield[]> = this.dataRequestService.GetCropYieldsByCountriesAndCrop(countryIds, 1);
+    var cropYields: ICropYield[] = [];
+    
+    cropYieldsObservable.subscribe((data: ICropYield[]) => {
+      console.log("chart-component.OnCountriesSelected: ");
+      console.log(data);
+
+    });
+    
   }
 
   ngAfterViewInit(): void {
