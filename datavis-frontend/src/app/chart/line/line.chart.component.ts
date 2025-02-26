@@ -1,11 +1,11 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { CountrySelectorComponent } from "../country-selector/country-selector.component";
-import { CropSelectorComponent } from "../crop-selector/crop-selector.component";
+import { CountrySelectorComponent } from "../../country-selector/country-selector.component";
+import { CropSelectorComponent } from "../../crop-selector/crop-selector.component";
 
-import { DataRequestService } from '../services/data-request.service';
-import { ChartDataHandlerService } from '../services/chart-data-handler.service';
+import { DataRequestService } from '../../services/data-request.service';
+import { ChartDataHandlerService } from '../../services/chart-data-handler.service';
 
-import { ICropYield } from '../interfaces/icrop-yield';
+import { ICropYield } from '../../interfaces/icrop-yield';
 
 import { Observable } from 'rxjs';
 
@@ -14,11 +14,11 @@ Chart.register(...registerables)
 @Component({
   selector: 'app-chart',
   imports: [CountrySelectorComponent, CropSelectorComponent],
-  templateUrl: './chart.component.html',
-  styleUrl: './chart.component.css'
+  templateUrl: './line.chart.component.html',
+  styleUrl: './line.chart.component.css'
 })
 
-export class ChartComponent implements AfterViewInit {
+export class LineChartComponent implements AfterViewInit {
   constructor
   (
     private dataRequestService: DataRequestService,
