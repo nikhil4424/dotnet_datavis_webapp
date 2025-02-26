@@ -1,6 +1,6 @@
 import { Injectable, output } from '@angular/core';
 import { ICropYield } from '../interfaces/icrop-yield';
-import { Chart, ChartConfiguration, ChartDataset } from 'chart.js';
+import { Chart, ChartConfiguration, ChartData, ChartDataset } from 'chart.js';
 
 @Injectable({
   providedIn: 'root'
@@ -42,35 +42,33 @@ export class ChartDataHandlerService {
   ];
 
 
-  public GetLineChartConfigFromCropYield(cropYieldData: ICropYield[]): ChartConfiguration{
-    let outputConfig: ChartConfiguration = {
-      type: 'line',
-      data: {
-        labels: [], // ICropYield.year unique sorted
-        datasets: [
-          // { ChartDataset
-          //   label: "",  // ICropYield.country
-          //   data: [] , // ICropYield.values
-          // }
-        ] 
-      }
+  public GetLineChartDataFromCropYield(cropYieldData: ICropYield[]): ChartData{
+    let outputData: ChartData = 
+    {
+      labels: [], // ICropYield.year unique sorted
+      datasets: 
+      [
+        // { ChartDataset
+        //   label: "",  // ICropYield.country
+        //   data: [] , // ICropYield.values
+        // }
+      ] 
     }
 
     let uniqueYears: number[] = this.GetSortedUniqueYearsFromCropYields(cropYieldData);
-    outputConfig.data.labels = uniqueYears;
+    outputData.labels = uniqueYears;
 
     let uniqueCountries: string[] = this.GetSortedUniqueCountriesFromCropYields(cropYieldData);
 
     for (let country of uniqueCountries){
 
       let countryCropYieldDataset: ChartDataset = this.GetCropYieldValuesByCountry(cropYieldData, country);
-      outputConfig.data.datasets.push(
+      outputData.datasets.push(
         countryCropYieldDataset
       );
-
     }
 
-    return outputConfig;
+    return outputData;
   }
 
   private GetSortedUniqueYearsFromCropYields(cropYieldData: ICropYield[]): number[]{
