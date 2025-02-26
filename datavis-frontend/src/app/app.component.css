@@ -2,3 +2,9 @@
   margin: auto;
   height: 90vh;
 }
+
+.container {
+  width: 100%;
+
+  border: 3px solid black;
+}

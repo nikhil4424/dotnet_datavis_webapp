@@ -1,5 +1,25 @@
-<div class="body center">
+<!-- <router-outlet /> -->
+<div class="body">
     <p>Hello world, {{title}} here.</p>
-    <router-outlet />
+    
+    <div class="container">
+
+        <div id="selectors-container">
+    
+            <app-country-selector
+                [selectableCountries]="selectableCountries" 
+                (countriesSelectedEvent)="OnCountriesSelected($event)" 
+            />
+    
+            <app-crop-selector />
+            
+        </div>
+    
+        <app-line-chart 
+            [chartData]="lineChartData" 
+        />
+
+    </div>
+
 
 </div>

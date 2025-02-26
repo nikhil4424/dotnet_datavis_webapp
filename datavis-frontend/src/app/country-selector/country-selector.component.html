@@ -1,15 +1,22 @@
 <div id="country-selector">
+
     <div class="country-selector-header">
         <h3>Select countries</h3>
         <!-- <button type="submit" value="countries"> Submit </button> -->
     </div>
+
     <div class="country-selector-body">
+
         <form id="country-selector-form" (submit)="submitCountries($event)">
+
             <button type="submit" value="countries"> Submit </button>
+
             <div class="country-selector-item" *ngFor="let country of selectableCountries">
                 <input type="checkbox" name="countries" id={{country.name}} value={{country.id}} />
                 <label for={{country.name}}>{{country.name}}</label>
             </div>
+            
         </form>
+
     </div>
 </div>
