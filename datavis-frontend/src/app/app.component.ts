@@ -1,4 +1,4 @@
-import { Component, inject, Output } from '@angular/core';
+import { Component, inject, output, Output } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -30,35 +30,43 @@ export class AppComponent {
 
   protected selectableCountries!: ICountry[]; // for CountrySelector, initialized in ngOnInit
 
-  protected lineChartData!: ChartData;// for canvas basechart html
+  protected  lineChartData!: ChartData;// input for line.chart.component for canvas
 
 
   ngOnInit(): void {
     this.selectableCountries = this.GetSelectableCountries();
+
+    this.SetLineChartCropYieldData([1], 1);
+
   }
 
   protected GetSelectableCountries(): ICountry[]{
-    let selectableCounries: ICountry[] = [];
+    let selectableCountries: ICountry[] = [];
     try{
       let countriesObservable: Observable<ICountry[]> = this.dataRequestService.GetCountries();
       countriesObservable.subscribe((data: ICountry[]) => {
-      selectableCounries = data;
+      selectableCountries = data;
     });
     } catch (error) {
       console.error("Error in country-selector.component.ngOnInit: " + error);
     }
-    return selectableCounries;
+    return selectableCountries;
+  }
+  // method has to set the variable itself it seems, because of of the asynchronous nature of subscribing to an Observable
+  protected SetLineChartCropYieldData(countryIds: number[], cropId: number): void {
+    // request crop yield data from api
+    var cropYieldsObservable: Observable<ICropYield[]> = this.dataRequestService.GetCropYieldsByCountriesAndCrop(countryIds, cropId);
+    
+    // update chart data with new data
+    cropYieldsObservable.subscribe((cropYields: ICropYield[]) => {
+      this.lineChartData = this.chartDataHandlerService.GetLineChartDataFromCropYield(cropYields);
+    });
   }
 
   protected OnCountriesSelected(countryIds: number[]): void {
-    // request crop yield data from api
-    var cropYieldsObservable: Observable<ICropYield[]> = this.dataRequestService.GetCropYieldsByCountriesAndCrop(countryIds, 1);
-    
-    // update chartConfig with new data
-    cropYieldsObservable.subscribe((cropYields: ICropYield[]) => {
-      this.lineChartData = this.chartDataHandlerService.GetLineChartDataFromCropYield(cropYields);
-      console.log(cropYields);
-      
-    });
+    this.SetLineChartCropYieldData(countryIds, 1);
+
   }
+
+
 }
