@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { afterNextRender, AfterViewInit, Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { Chart, ChartData, registerables } from 'chart.js';
 Chart.register(...registerables);
 
@@ -12,19 +12,38 @@ Chart.register(...registerables);
 
 export class LineChartComponent  implements AfterViewInit{
   @Input() chartData!: ChartData;
-  @ViewChild('chartCanvas') chartCanvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('chartCanvas', {static: true}) private chartCanvasRef!: ElementRef<HTMLCanvasElement>;
 
-  protected chartObj!: Chart;
+  public chartObj!: Chart;
 
 
+  // suggestion to initialize chartObj in constructor with afterNextRender from: 
+  // https://developer.chrome.com/blog/angular-dom-safety-ssr
+  // but doesn't fix the error: ERROR TypeError: Cannot set properties of undefined (setting 'data')
+  // at line 48
 
-  ngAfterViewInit(): void{
+  // constructor() {
+  //   afterNextRender(() => {
+  //     this.chartObj = new Chart(
+  //       this.chartCanvasRef.nativeElement,
+  //     {
+  //       type: 'line',
+  //       data: {
+  //         datasets: []
+  //       }
+  //     })
+  //   } 
+  //   )
+  //  }
+
+
+  ngAfterViewInit(): void {
     this.chartObj = this.CreateLineChartObj(this.chartCanvasRef, this.chartData);
     this.chartObj.update();
-
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // Update chart on chart data changes after first change
     if (changes['chartData'] && !changes['chartData'].firstChange ) {
       this.chartObj.data = this.chartData;
       this.chartObj.update();
