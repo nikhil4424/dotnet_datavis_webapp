@@ -10,7 +10,7 @@ import { NgFor } from '@angular/common';
 })
 
 export class CountrySelectorComponent { 
-  @Input() selectableCountries: ICountry[] = [];
+  @Input({required: true}) selectableCountries: ICountry[] = [];
 
   @Output() countriesSelectedEvent = new EventEmitter<number[]>();
 

@@ -11,7 +11,10 @@
                 (countriesSelectedEvent)="OnCountriesSelected($event)" 
             />
     
-            <app-crop-selector />
+            <app-crop-selector
+                [selectableCrops]="selectableCrops"
+                
+            />
             
         </div>
     

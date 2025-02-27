@@ -11,11 +11,12 @@
 
             <button type="submit" value="countries"> Submit </button>
 
-            <div class="country-selector-item" *ngFor="let country of selectableCountries">
-                <input type="checkbox" name="countries" id={{country.name}} value={{country.id}} />
-                <label for={{country.name}}>{{country.name}}</label>
-            </div>
-            
+            @for (country of selectableCountries; track $index){
+                <div class="country-selector-item">
+                    <input type="checkbox" name="countries" id={{country.name}} value={{country.id}} />
+                    <label for={{country.name}}>{{country.name}}</label>
+                </div>    
+            }
         </form>
 
     </div>
