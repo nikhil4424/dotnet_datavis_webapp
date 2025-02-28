@@ -77,7 +77,11 @@ export class AppComponent {
 
     }
   
-    protected OnCropSelected(cropId: number): void {
+    protected OnCropSelected(cropId: number|null): void {
+      if (cropId == null) {
+        return;
+      }
+      
       this.selectedCropId = cropId;
       console.log("crop selected: " + cropId);
       this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCropId);
