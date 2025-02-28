@@ -1,0 +1,24 @@
+.body {
+  margin: auto;
+  height: 90vh;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border: 3px solid black;
+}
+
+#selectors-container {
+  height: 100%;
+  width: 25%;
+
+  border: 3px dashed purple;
+}
+
+#linechart-container {
+  width: 75%;
+
+  border: 3px solid pink;
+}

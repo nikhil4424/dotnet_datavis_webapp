@@ -1,5 +1,4 @@
 #country-selector {
-  height: 100%;
   height: 50%;
   border: 3px solid orange;
 }
@@ -11,6 +10,5 @@
 .country-selector-item {
   padding: 3px;
   border-bottom: 1px solid #ccc;
-  cursor: pointer;
   width: 100%;
 }
