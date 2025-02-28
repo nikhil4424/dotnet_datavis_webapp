@@ -1,10 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, Input, } from '@angular/core';
+import { Component, Output, EventEmitter, Input, } from '@angular/core';
 import { ICountry } from '../interfaces/icountry';
-import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-country-selector',
-  imports: [NgFor],
+  imports: [],
   templateUrl: './country-selector.component.html',
   styleUrl: './country-selector.component.css'
 })

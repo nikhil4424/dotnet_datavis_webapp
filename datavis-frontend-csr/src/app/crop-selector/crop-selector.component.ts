@@ -9,7 +9,7 @@ import { ICrop } from '../interfaces/icrop';
   styleUrl: './crop-selector.component.css'
 })
 export class CropSelectorComponent {
-  @Input() selectableCrops!: ICrop[];
+  @Input({required: true}) selectableCrops!: ICrop[];
   
   @Output() cropSelectedEvent = new EventEmitter<number>();
 
@@ -18,9 +18,9 @@ export class CropSelectorComponent {
 
     let form = event.target as HTMLFormElement;
     let formData = new FormData(form);
-
-    // convert formdata to number
-    // let selectedCropId: number = formData.get
+    let selectedCropId = formData.get('crops') as unknown as number;
+    
+    this.cropSelectedEvent.emit(selectedCropId);
   }
 
 }
