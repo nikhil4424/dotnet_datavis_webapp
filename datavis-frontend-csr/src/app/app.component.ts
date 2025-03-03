@@ -29,11 +29,11 @@ export class AppComponent {
     protected selectableCountries!: ICountry[]; // for CountrySelector, initialized in ngOnInit()
     protected selectableCrops!: ICrop[]; // input for CropSelector, initialized in ngOnInit()
     
-    protected selectedCountryIds: number[] = [1];
+    protected selectedCountries: ICountry[] = [{id: 1, name: "Afghanistan"}];
     protected selectedCrop: ICrop = {id: 1, name: "almond"};
     
       // For child chart components
-    protected  lineChartData!: ChartData;// input for line.chart.component for canvas
+    protected  lineChartData!: ChartData;// input for line.chart.component for canvas, initialized in ngOnInit()
   
     constructor(
       private dataRequestService: DataRequestService,
@@ -50,7 +50,7 @@ export class AppComponent {
         (crops: ICrop[]) => this.selectableCrops = crops
       )
   
-      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCrop.id);
+      this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
   
     }
   
@@ -66,16 +66,15 @@ export class AppComponent {
       });
     }
   
-    protected OnCountriesSelected(countryIds: number[]): void {
-      this.selectedCountryIds = countryIds;
-      console.log("countries selected: " + countryIds)
-      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCrop.id);
+    protected OnCountriesSelected(countries: ICountry[]): void {
+      this.selectedCountries = countries;
+      this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
 
     }
   
     protected OnCropSelected(crop: ICrop): void {
       this.selectedCrop = crop;
-      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCrop.id);
+      this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
     }
   
   

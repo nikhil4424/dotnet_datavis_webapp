@@ -1,9 +1,14 @@
 #crop-selector {
-  height: 50%;
+  height: 48.5%;
+  border: 3px solid orange;
+}
+
+#crop-selector-header {
+  height: 10%;
 }
 
 #crop-selector-body {
-  height: 84%;
+  height: 84.5%;
   overflow-y: scroll;
 }
 

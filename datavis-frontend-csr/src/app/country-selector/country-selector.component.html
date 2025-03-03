@@ -13,8 +13,8 @@
 
             @for (country of selectableCountries; track $index){
                 <div class="country-selector-item">
-                    <input type="checkbox" name="countries" id={{country.name}} value={{country.id}} />
-                    <label for={{country.name}}>{{country.name}}</label>
+                    <input type="checkbox" name="countries" id={{country.id}} value={{country.id}} [checked]="$index ===0" />
+                    <label for={{country.id}}>{{country.name}}</label>
                 </div>    
             }
         </form>
