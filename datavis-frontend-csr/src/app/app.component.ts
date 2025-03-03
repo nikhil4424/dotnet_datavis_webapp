@@ -25,16 +25,12 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'datavis-frontend-csr';
 
-    // service depencdency injections
-    // private chartDataHandlerService:ChartDataHandlerService = Inject(ChartDataHandlerService);
-    // private dataRequestService: DataRequestService = Inject(DataRequestService)
-  
-    // Input variables for child selector components
+   // Input variables for child selector components
     protected selectableCountries!: ICountry[]; // for CountrySelector, initialized in ngOnInit()
     protected selectableCrops!: ICrop[]; // input for CropSelector, initialized in ngOnInit()
     
     protected selectedCountryIds: number[] = [1];
-    protected selectedCropId: number = 1;
+    protected selectedCrop: ICrop = {id: 1, name: "almond"};
     
       // For child chart components
     protected  lineChartData!: ChartData;// input for line.chart.component for canvas
@@ -54,7 +50,7 @@ export class AppComponent {
         (crops: ICrop[]) => this.selectableCrops = crops
       )
   
-      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCropId);
+      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCrop.id);
   
     }
   
@@ -73,18 +69,13 @@ export class AppComponent {
     protected OnCountriesSelected(countryIds: number[]): void {
       this.selectedCountryIds = countryIds;
       console.log("countries selected: " + countryIds)
-      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCropId);
+      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCrop.id);
 
     }
   
-    protected OnCropSelected(cropId: number|null): void {
-      if (cropId == null) {
-        return;
-      }
-      
-      this.selectedCropId = cropId;
-      console.log("crop selected: " + cropId);
-      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCropId);
+    protected OnCropSelected(crop: ICrop): void {
+      this.selectedCrop = crop;
+      this.SetLineChartCropYieldData(this.selectedCountryIds, this.selectedCrop.id);
     }
   
   
