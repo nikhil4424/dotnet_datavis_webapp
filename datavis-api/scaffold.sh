@@ -1,4 +1,6 @@
 # !/bin/bash
+# Used for generating C# model classes based on existing Postgresql database schemas.
+# Used by Entity Framework Core to allow database CRUD operations.
 dotnet ef dbcontext scaffold \
 "Host=localhost;Database=crop_yields_owid;Username=postgres;Password=postgres" \
 Npgsql.EntityFrameworkCore.PostgreSQL \
