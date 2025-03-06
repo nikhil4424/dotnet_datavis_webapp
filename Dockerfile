@@ -12,33 +12,26 @@
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 
 # Create a stage for building the application.
-
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 
 # https://medium.com/codex/containerizing-a-net-app-with-postgres-using-docker-compose-a35167b419e7
-# copy solution and csproj for dotnet restore, to have dependency restoration as a distinct layer
-# WORKDIR /source
-# COPY *.sln  .
-# COPY datavis-api/*.csproj /source/api/
-# RUN dotnet restore
+# copy solution and csproj for dependencies for dotnet restore, to have dependency restoration as a distinct layer
 
-# # Copy app source code and build
-# COPY datavis-api/.  /api/
+# Copy packages to install dependencies
+COPY *.sln .
+WORKDIR /src
+COPY datavis-api/*.csproj .
+RUN dotnet restore
 
-
-# original code from docker init
-COPY . /source
-WORKDIR /source/datavis-api
-# RUN dotnet restore
+# Copy source code
+COPY datavis-api .
 
 # This is the architecture you’re building for, which is passed in by the builder .
 # Placing it here allows the previous steps to be cached across architectures.
 ARG TARGETARCH
 
 # Build the application.
-# Leverage a cache mount to /root/.nuget/packages so that subsequent builds don't have to re-download packages.
-# If TARGETARCH is "amd64", replace it with "x64" - "x64" is .NET's canonical name for this and "amd64" doesn't
-#   work in .NET 6.0.
+# Leverage a cache mount to /root/.nuget/packages so that subsequent builds don't have to re-download packages
 
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
     dotnet publish datavis-api.csproj -a ${TARGETARCH/amd64/x64} --use-current-runtime --self-contained false -o /app
