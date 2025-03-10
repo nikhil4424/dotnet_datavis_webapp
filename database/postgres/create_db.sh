@@ -8,7 +8,7 @@ DB_PASSWORD="postgres"
 DB_MODEL_FILE="/docker-entrypoint-initdb.d/init_resources/schema.sql"
 COUNTRY_CSV_FILE="/docker-entrypoint-initdb.d/init_resources/country.csv"
 YEAR_CSV_FILE="/docker-entrypoint-initdb.d/init_resources/year.csv"
-CROP_CSV_FILE="/docker-entrypoint-initdb.d/init_resources/country.csv"
+CROP_CSV_FILE="/docker-entrypoint-initdb.d/init_resources/crop.csv"
 CROP_YIELD_CSV_FILE="/docker-entrypoint-initdb.d/init_resources/crop_yield.csv"
 CROPYIELDS_VIEW_CSV_FILE="/docker-entrypoint-initdb.d/init_resources/view_yield.sql"
 
