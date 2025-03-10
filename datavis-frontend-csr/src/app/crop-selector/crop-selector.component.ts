@@ -11,7 +11,8 @@ import { ICrop } from '../interfaces/icrop';
 export class CropSelectorComponent {
   @Input({required: true}) selectableCrops!: ICrop[];
   
-  @Output() cropSelectedEvent = new EventEmitter<number>();
+  
+  @Output() cropSelectedEvent = new EventEmitter<ICrop>();
 
   protected submitCrop(event: Event): void {
     event.preventDefault();
@@ -19,8 +20,9 @@ export class CropSelectorComponent {
     let form = event.target as HTMLFormElement;
     let formData = new FormData(form);
     let selectedCropId = formData.get('crops') as unknown as number;
-    
-    this.cropSelectedEvent.emit(selectedCropId);
+    let selectedCropObj = this.selectableCrops.filter((crop) => crop.id == selectedCropId);
+
+    this.cropSelectedEvent.emit(selectedCropObj[0]);
   }
 
 }

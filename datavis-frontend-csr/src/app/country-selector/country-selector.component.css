@@ -2,8 +2,13 @@
   height: 50%;
   border: 3px solid orange;
 }
+
+.country-selector-header {
+  height: 10%;
+}
+
 .country-selector-body {
-  height: 84%;
+  height: 85%;
   overflow-y: scroll;
 }
 

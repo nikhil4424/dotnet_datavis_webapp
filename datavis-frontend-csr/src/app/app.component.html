@@ -1,7 +1,6 @@
 <!-- <router-outlet /> -->
 <div class="body">
-  <p>Hello world, {{title}} here.</p>
-  
+  <h3> Una Garcia's crop yield data chart project </h3>
   <div class="container">
 
       <div id="selectors-container">
@@ -23,6 +22,7 @@
 
         <app-line-chart 
             [chartData]="lineChartData" 
+            [currentCrop]="selectedCrop"
         />
         
       </div>

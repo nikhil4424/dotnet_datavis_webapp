@@ -11,18 +11,19 @@ import { ICountry } from '../interfaces/icountry';
 export class CountrySelectorComponent { 
   @Input({required: true}) selectableCountries: ICountry[] = [];
 
-  @Output() countriesSelectedEvent = new EventEmitter<number[]>();
+  @Output() countriesSelectedEvent = new EventEmitter<ICountry[]>();
 
 
   protected submitCountries(event: Event): void {
     // Prevent form submission and url change
     event.preventDefault();
 
-    var form = event.target as HTMLFormElement;
-    var formData = new FormData(form);
+    let form = event.target as HTMLFormElement;
+    let formData = new FormData(form);
     // convert formdata to number array
-    var selectedCountryIds: number[] = formData.getAll('countries').map((id) => parseInt(id as string));
-    
-    this.countriesSelectedEvent.emit(selectedCountryIds);
+    let selectedCountryIds: number[] = formData.getAll('countries').map((id) => parseInt(id as string));
+
+    let selectedCountryObjs: ICountry[] = this.selectableCountries.filter((country) => selectedCountryIds.includes(country.id));
+    this.countriesSelectedEvent.emit(selectedCountryObjs);
   }
 }
