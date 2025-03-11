@@ -5,7 +5,7 @@ The tools/frameworks being user are:
 
 - Postgres database to convert csv data into
 - ASP.net Core for backend API
-- Angular for frontnet
+- Angular for frontend
 - ~~Plotly~~ Chart.js for data visualisation
 
 ## Requirements
