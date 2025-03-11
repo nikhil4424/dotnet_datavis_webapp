@@ -1,35 +1,29 @@
-# https://medium.com/@nadir.inab.dev/dockerizing-your-angular-app-a-quick-guide-00a3ecabe419
+# https://levioconsulting.com/insights/how-to-dockerize-an-angular-application-with-nginx/
+# Stage 1: Compile and Build angular codebase
 
-# https://github.com/docker/awesome-compose/blob/master/angular/angular/Dockerfile
-
-# Use an official Node.js runtime as a parent image
-FROM node:alpine as build
+# Use official node image as the base image
+FROM node:latest as build
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /usr/local/app
 
-RUN npm install -g @angular/cli
+# Add the source code to app
+COPY . /usr/local/app/
 
-# Copy package.json and package-lock.json
-COPY package*.json .
+# Install all the dependencies
+RUN npm clean-install
 
-# Install dependencies
-RUN npm install -g @angular/cli
-RUN npm install
-
-# Copy the rest of the application code
-COPY . .
-
-# Build the Angular application
-# RUN npm run build --prod
-RUN ng build --configuration=production
-
-# Use an official Nginx runtime as a parent image
-FROM nginx:alpine
-
-# Copy the built Angular application to the Nginx HTML directory
-COPY --from=build /app/dist/datavis-frontend-csr /usr/share/nginx/html
+# Generate the build of the application
+RUN npm run build
 
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Stage 2: Serve app with nginx server
+
+# Use official nginx image as the base image
+FROM nginx:latest
+
+# Copy the build output to replace the default nginx contents.
+COPY --from=build /usr/local/app/dist/datavis-frontend-csr /usr/share/nginx/html
+
+# # Expose port 80
+# EXPOSE 80

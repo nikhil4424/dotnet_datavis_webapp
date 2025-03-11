@@ -5,12 +5,13 @@ services:
     image: datavis-frontend
     restart: always
     build:
-      context: .
-      dockerfile: datavis-frontend-csr/Dockerfile
+      context: ./datavis-frontend-csr
+      # dockerfile: datavis-frontend-csr/Dockerfile
     ports:
     - 4200:4200
     depends_on:
       - datavis-api
+
   datavis-api:
     image: datavis-api
     restart: always
