@@ -1,8 +1,19 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
 
 services:
-  datavisapi:
-    image: datavisapi
+  datavis-frontend:
+    image: datavis-frontend
+    restart: always
+    build:
+      context: ./datavis-frontend-csr
+      # dockerfile: datavis-frontend-csr/Dockerfile
+    ports:
+    - 4200:80
+    depends_on:
+      - datavis-api
+
+  datavis-api:
+    image: datavis-api
     restart: always
     build:
       context: .
