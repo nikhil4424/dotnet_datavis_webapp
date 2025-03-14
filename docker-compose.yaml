@@ -3,7 +3,7 @@
 services:
   datavis-frontend:
     image: datavis-frontend
-    restart: always@
+    restart: always
     build:
       context: ./datavis-frontend-csr
       # dockerfile: datavis-frontend-csr/Dockerfile
