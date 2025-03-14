@@ -1,32 +1,37 @@
 # https://levioconsulting.com/insights/how-to-dockerize-an-angular-application-with-nginx/
+# https://jonathanantoine.medium.com/hosting-an-angular-application-inside-a-docker-container-with-nginx-b10f3f0a4c26
+
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
-FROM node:latest as build
+FROM node:latest AS build
 
 # Set the working directory
-WORKDIR /usr/local/app
+WORKDIR /app
+# Install angular
+RUN npm install -g @angular/cli
 
-# Add the source code to app
-COPY . /usr/local/app/
-
-# Install all the dependencies
+# Copy and install dependencies
+COPY package*.json .
 RUN npm clean-install
 
+# Add the source code to app
+COPY . .
+
 # Generate the build of the application
-RUN npm run build
+RUN npm run build --configuration=production
 
 
 # Stage 2: Serve app with nginx server
 
 # Use official nginx image as the base image
-FROM nginx:latest
+FROM nginx:stable AS final
+WORKDIR /usr/share/nginx/html
 
-# Copy the nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
+# Remove default nginx static assets
+RUN rm -rf ./*
 
-# Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/datavis-frontend-csr /usr/share/nginx/html
+# Copy the build output
+COPY --from=build app/dist/datavis-frontend-csr/browser .
 
-# # Expose port 80
-# EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
