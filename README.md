@@ -3,10 +3,12 @@
 A small web application that provides datavisualisations for [a crop yield dataset selected from OurWorldinData](https://ourworldindata.org/crop-yields#explore-data-on-crop-yields).
 The tools/frameworks being user are:
 
-- Postgres database to convert csv data into
+- Postgres database that contains converted csv data
 - ASP.net Core for backend API
 - Angular for frontend
 - ~~Plotly~~ Chart.js for data visualisation
+- Docker for containerization
+
 
 ## Requirements
 - [Docker](https://www.docker.com/get-started/)
