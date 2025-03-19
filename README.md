@@ -9,6 +9,7 @@ The tools/frameworks being user are:
 - ~~Plotly~~ Chart.js for data visualisation
 - Docker for containerization
 
+
 ## Requirements
 - [Docker](https://www.docker.com/get-started/)
 ## How to start application
