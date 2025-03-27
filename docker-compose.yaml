@@ -1,30 +1,30 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
 
 services:
-  datavis-frontend:
-    image: datavis-frontend
-    restart: always
-    build:
-      context: ./datavis-frontend-csr
-    ports:
-    - 4200:80
-    depends_on:
-      - datavis-api
+  # datavis-frontend:
+  #   image: datavis-frontend
+  #   restart: always
+  #   build:
+  #     context: ./datavis-frontend-csr
+  #   ports:
+  #   - 4200:80
+  #   depends_on:
+  #     - datavis-api
 
-  datavis-api:
-    image: datavis-api
-    restart: always
-    build:
-      context: .
-      dockerfile: datavis-api/Dockerfile
-    ports:
-      - 5065:5065
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      # - ASPNETCORE_URLS=http://+:5065
-    depends_on:
-      postgres-db:
-        condition: service_healthy
+  # datavis-api:
+  #   image: datavis-api
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: datavis-api/Dockerfile
+  #   ports:
+  #     - 5065:5065
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     # - ASPNETCORE_URLS=http://+:5065
+  #   depends_on:
+  #     postgres-db:
+  #       condition: service_healthy
 
   postgres-db:
     image: postgres
