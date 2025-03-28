@@ -14,11 +14,6 @@ public interface ICropRepository
     IOrderedQueryable<CropYield> GetCropYieldsByCountry(int countryId);
     IOrderedQueryable<CropYield> GetCropYieldsByYear(int yearId);
     IOrderedQueryable<CropYield> GetCropYieldsByCrop(int cropId);
-    IOrderedQueryable<CropYield> GetCropYieldsByCountryAndYear(int countryId, int yearId);
-    IOrderedQueryable<CropYield> GetCropYieldsByCountryAndCrop(int countryId, int cropId);
     IOrderedQueryable<CropYield> GetCropYieldsByCountriesAndCrop(int[] countryIds, int cropId);
-    IOrderedQueryable<CropYield> GetCropYieldsByYearAndCrop(int yearId, string cropId);
-
-
-
+    IOrderedQueryable<CropYield> GetCropYieldsWithinYearRangeByCrop(int yearStart, int yearEnd, int cropId);
 }
