@@ -1,0 +1,23 @@
+.body {
+  margin: auto;
+  height: 90vh;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+#selectors-container {
+  height: 100%;
+  width: 25%;
+
+  /* border: 3px solid orange; */
+}
+
+#linechart-container {
+  width: 75%;
+
+  border: 3px solid orange;
+}
