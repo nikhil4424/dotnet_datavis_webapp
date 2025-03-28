@@ -2,6 +2,8 @@ using DatavisApi.Interfaces;
 using DatavisApi.Data;
 using DatavisApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+
 namespace DatavisApi.Repository;
 
 public class CropRepository : ICropRepository
@@ -64,35 +66,6 @@ public class CropRepository : ICropRepository
             .OrderBy(cy => cy.Id);
     }
 
-    public IOrderedQueryable<CropYield> GetCropYieldsByCountryAndYear(int countryId, int yearId)
-    {
-        IOrderedQueryable<CropYield> cropYields = _dataContext.CropYields
-        .Include(cy => cy.Country)
-        .Include(cy => cy.Crop)
-        .Include(cy => cy.Year)
-        .Where(cropYield =>
-            cropYield.Country.Id == countryId &&
-            cropYield.Year.Id == yearId)
-        .OrderBy(cy => cy.Year.Value);
-
-        return cropYields;
-
-    }
-
-    public IOrderedQueryable<CropYield> GetCropYieldsByCountryAndCrop(int countryId, int cropId)
-    {
-        IOrderedQueryable<CropYield> cropYields = _dataContext.CropYields
-            .Include(cy => cy.Country)
-            .Include(cy => cy.Crop)
-            .Include(cy => cy.Year)
-            .Where(cy =>
-                cy.Country.Id == countryId &&
-                cy.Crop.Id == cropId
-            ).OrderBy(cy => cy.Year.Value);
-
-        return cropYields;
-    }
-
     public IOrderedQueryable<CropYield> GetCropYieldsByCountriesAndCrop(int[] countryIds, int cropId)
     {
         IOrderedQueryable<CropYield> cropYields = _dataContext.CropYields
@@ -107,8 +80,19 @@ public class CropRepository : ICropRepository
         return cropYields;
     }
 
-    public IOrderedQueryable<CropYield> GetCropYieldsByYearAndCrop(int yearId, string cropId)
+    public IOrderedQueryable<CropYield> GetCropYieldsWithinYearRangeByCrop(int yearStart, int yearEnd, int cropId)
     {
-        throw new NotImplementedException();
+
+        IOrderedQueryable<CropYield> cropYields = _dataContext.CropYields
+            .Include(cy => cy.Country)
+            .Include(cy => cy.Crop)
+            .Include(cy => cy.Year)
+            .Where(cy =>
+                cy.Year.Value >= yearStart &&
+                cy.Year.Value <= yearEnd &&
+                cy.Crop.Id == cropId
+            ).OrderBy(cy => cy.Id);
+
+        return cropYields;
     }
 }

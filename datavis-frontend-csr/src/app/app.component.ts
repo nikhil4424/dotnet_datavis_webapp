@@ -1,82 +1,14 @@
-import { Component, Inject} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
-import { ICountry } from './interfaces/icountry';
-import { ICrop } from './interfaces/icrop';
-import { ICropYield } from './interfaces/icrop-yield';
-
-import { DataRequestService } from './services/data-request.service';
-import { ChartDataHandlerService } from './services/chart-data-handler.service';
-
-import { CountrySelectorComponent } from './country-selector/country-selector.component';
-import { CropSelectorComponent } from './crop-selector/crop-selector.component';
-import { LineChartComponent } from './chart/line/line.chart.component';
-
-import { ChartData } from 'chart.js';
-
-import { Observable } from 'rxjs';
+import { Component} from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { HeaderComponent } from "./header/header.component";
+import { FooterComponent } from "./footer/footer.component";
 
 @Component({
   selector: 'app-root',
-  imports: [CountrySelectorComponent, CropSelectorComponent, LineChartComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'datavis-frontend-csr';
-
-   // Input variables for child selector components
-    protected selectableCountries!: ICountry[]; // for CountrySelector, initialized in ngOnInit()
-    protected selectableCrops!: ICrop[]; // input for CropSelector, initialized in ngOnInit()
-    
-    protected selectedCountries: ICountry[] = [{id: 1, name: "Afghanistan"}];
-    protected selectedCrop: ICrop = {id: 1, name: "almond"};
-    
-      // For child chart components
-    protected  lineChartData!: ChartData;// input for line.chart.component for canvas, initialized in ngOnInit()
-  
-    constructor(
-      private dataRequestService: DataRequestService,
-      private chartDataHandlerService: ChartDataHandlerService
-    ) {}
-  
-    ngOnInit(): void {
-      // Initialize selectable countries
-      this.dataRequestService.GetCountries().subscribe(
-        (countries: ICountry[]) => this.selectableCountries = countries
-      )
-      // Initialize selectable crops
-      this.dataRequestService.GetCrops().subscribe(
-        (crops: ICrop[]) => this.selectableCrops = crops
-      )
-  
-      this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
-  
-    }
-  
-    // method has to set the cropyielddata itself it seems, because of of the asynchronous nature of subscribing to an Observable
-    protected SetLineChartCropYieldData(countryIds: number[], cropId: number): void {
-      // request crop yield data from api
-      var cropYieldsObservable: Observable<ICropYield[]> = this.dataRequestService.GetCropYieldsByCountriesAndCrop(countryIds, cropId);
-      
-      // update chart data with new data
-      cropYieldsObservable.subscribe(
-        (cropYields: ICropYield[]) => {
-        this.lineChartData = this.chartDataHandlerService.GetLineChartDataFromCropYield(cropYields);
-      });
-    }
-  
-    protected OnCountriesSelected(countries: ICountry[]): void {
-      this.selectedCountries = countries;
-      this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
-
-    }
-  
-    protected OnCropSelected(crop: ICrop): void {
-      this.selectedCrop = crop;
-      this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
-    }
-  
-  
-
 }

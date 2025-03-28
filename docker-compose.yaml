@@ -6,7 +6,6 @@ services:
     restart: always
     build:
       context: ./datavis-frontend-csr
-      # dockerfile: datavis-frontend-csr/Dockerfile
     ports:
     - 4200:80
     depends_on:
@@ -16,10 +15,11 @@ services:
     image: datavis-api
     restart: always
     build:
-      context: .
-      dockerfile: datavis-api/Dockerfile
+      context: ./datavis-api
     ports:
-      - 5065:5065
+      - 5065:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
       postgres-db:
         condition: service_healthy
