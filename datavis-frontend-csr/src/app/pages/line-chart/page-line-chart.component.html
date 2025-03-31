@@ -2,14 +2,15 @@
     <div class="container">
   
         <div class="selectors-container">
-    
+            
+            <app-crop-selector
+                (cropSelectedEvent)="OnCropSelected($event)"
+            />
+            
             <app-country-selector
                 (countriesSelectedEvent)="OnCountriesSelected($event)" 
             />
     
-            <app-crop-selector
-                (cropSelectedEvent)="OnCropSelected($event)"
-            />
             
         </div>
     
