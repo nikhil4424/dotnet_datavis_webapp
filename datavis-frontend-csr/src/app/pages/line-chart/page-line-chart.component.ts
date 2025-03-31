@@ -2,16 +2,16 @@
 import { Component, Inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { ICountry } from '../interfaces/icountry';
-import { ICrop } from '../interfaces/icrop';
-import { ICropYield } from '../interfaces/icrop-yield';
+import { ICountry } from '../../interfaces/icountry';
+import { ICrop } from '../../interfaces/icrop';
+import { ICropYield } from '../../interfaces/icrop-yield';
 
-import { DataRequestService } from '../services/data-request.service';
-import { ChartDataHandlerService } from '../services/chart-data-handler.service';
+import { DataRequestService } from '../../services/data-request.service';
+import { ChartDataHandlerService } from '../../services/chart-data-handler.service';
 
-import { CountrySelectorComponent } from '../country-selector/country-selector.component';
-import { CropSelectorComponent } from '../crop-selector/crop-selector.component';
-import { LineChartComponent } from '../chart/line/line.chart.component';
+import { CountrySelectorComponent } from '../../country-selector/country-selector.component';
+import { CropSelectorComponent } from '../../crop-selector/crop-selector.component';
+import { LineChartComponent } from '../../chart/line/line.chart.component';
 
 import { ChartData } from 'chart.js';
 
