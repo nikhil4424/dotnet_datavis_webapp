@@ -1,5 +1,8 @@
-import { Component, Output, EventEmitter, Input, } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+
 import { ICountry } from '../interfaces/icountry';
+
+import { DataRequestService } from '../services/data-request.service';
 
 @Component({
   selector: 'app-country-selector',
@@ -9,10 +12,19 @@ import { ICountry } from '../interfaces/icountry';
 })
 
 export class CountrySelectorComponent { 
-  @Input({required: true}) selectableCountries: ICountry[] = [];
-
+  selectableCountries!: ICountry[];
   @Output() countriesSelectedEvent = new EventEmitter<ICountry[]>();
 
+  constructor(
+    private dataRequestService: DataRequestService
+  ) {}
+
+  ngOnInit(): void {
+    // Initialize selectable countries
+    this.dataRequestService.GetCountries().subscribe(
+      (countries: ICountry[]) => this.selectableCountries = countries
+    )
+  }
 
   protected submitCountries(event: Event): void {
     // Prevent form submission and url change
