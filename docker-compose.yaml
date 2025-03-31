@@ -2,14 +2,14 @@
 
 services:
   # datavis-frontend:
-    # image: datavis-frontend
-    # restart: always
-    # build:
-      # context: ./datavis-frontend-csr
-    # ports:
-    # - 4200:80
-    # depends_on:
-      # - datavis-api
+  #   image: datavis-frontend
+  #   restart: always
+  #   build:
+  #     context: ./datavis-frontend-csr
+  #   ports:
+  #   - 4200:80
+  #   depends_on:
+  #     - datavis-api
 
   datavis-api:
     image: datavis-api

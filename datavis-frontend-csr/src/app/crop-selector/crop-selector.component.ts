@@ -1,6 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 import { ICrop } from '../interfaces/icrop';
+
+import { DataRequestService } from '../services/data-request.service';
 
 @Component({
   selector: 'app-crop-selector',
@@ -9,10 +11,19 @@ import { ICrop } from '../interfaces/icrop';
   styleUrl: './crop-selector.component.css'
 })
 export class CropSelectorComponent {
-  @Input({required: true}) selectableCrops!: ICrop[];
-  
-  
+  selectableCrops!: ICrop[];
   @Output() cropSelectedEvent = new EventEmitter<ICrop>();
+
+  constructor(
+    private dataRequestService: DataRequestService
+  ) {}
+
+  ngOnInit(): void {
+    // Initialize selectable crops
+    this.dataRequestService.GetCrops().subscribe(
+      (crops: ICrop[]) => this.selectableCrops = crops
+    )
+  }
 
   protected submitCrop(event: Event): void {
     event.preventDefault();
@@ -24,5 +35,4 @@ export class CropSelectorComponent {
 
     this.cropSelectedEvent.emit(selectedCropObj[0]);
   }
-
 }

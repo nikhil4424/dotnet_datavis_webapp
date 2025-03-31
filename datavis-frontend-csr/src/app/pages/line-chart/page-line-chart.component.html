@@ -4,14 +4,11 @@
         <div class="selectors-container">
     
             <app-country-selector
-                [selectableCountries]="selectableCountries" 
                 (countriesSelectedEvent)="OnCountriesSelected($event)" 
             />
     
             <app-crop-selector
-                [selectableCrops]="selectableCrops"
                 (cropSelectedEvent)="OnCropSelected($event)"
-                
             />
             
         </div>
