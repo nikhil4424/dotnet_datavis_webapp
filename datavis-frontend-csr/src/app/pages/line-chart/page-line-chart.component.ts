@@ -1,6 +1,8 @@
 
-import { Component, Inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { CountrySelectorComponent } from '../../country-selector/country-selector.component';
+import { CropSelectorComponent } from '../../crop-selector/crop-selector.component';
+import { LineChartComponent } from '../../chart/line-chart/line.chart.component';
 
 import { ICountry } from '../../interfaces/icountry';
 import { ICrop } from '../../interfaces/icrop';
@@ -8,10 +10,6 @@ import { ICropYield } from '../../interfaces/icrop-yield';
 
 import { DataRequestService } from '../../services/data-request.service';
 import { ChartDataHandlerService } from '../../services/chart-data-handler.service';
-
-import { CountrySelectorComponent } from '../../country-selector/country-selector.component';
-import { CropSelectorComponent } from '../../crop-selector/crop-selector.component';
-import { LineChartComponent } from '../../chart/line/line.chart.component';
 
 import { ChartData } from 'chart.js';
 
@@ -33,7 +31,7 @@ export class PageLineChartComponent {
     protected selectedCountries: ICountry[] = [{id: 1, name: "Afghanistan"}];
     protected selectedCrop: ICrop = {id: 1, name: "almond"};
     
-      // For child chart components
+      // For child chart component
     protected  lineChartData!: ChartData;// input for line.chart.component for canvas, initialized in ngOnInit()
   
     constructor(
@@ -50,9 +48,7 @@ export class PageLineChartComponent {
       this.dataRequestService.GetCrops().subscribe(
         (crops: ICrop[]) => this.selectableCrops = crops
       )
-  
       this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
-  
     }
   
     // method has to set the cropyielddata itself it seems, because of of the asynchronous nature of subscribing to an Observable
@@ -70,7 +66,6 @@ export class PageLineChartComponent {
     protected OnCountriesSelected(countries: ICountry[]): void {
       this.selectedCountries = countries;
       this.SetLineChartCropYieldData(this.selectedCountries.map((c) => c.id), this.selectedCrop.id);
-
     }
   
     protected OnCropSelected(crop: ICrop): void {
