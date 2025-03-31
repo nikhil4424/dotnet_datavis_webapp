@@ -1,3 +1,4 @@
 *.obsidian
 **/obj
 **/bin
+*.vscode
