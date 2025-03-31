@@ -1,4 +1,4 @@
-import { afterNextRender, AfterViewInit, Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { Chart, ChartData, registerables } from 'chart.js';
 import { ICrop } from '../../interfaces/icrop';
 Chart.register(...registerables);

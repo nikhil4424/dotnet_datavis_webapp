@@ -1,0 +1,23 @@
+<div class="body">
+    <div class="container">
+  
+        <div id="selectors-container">
+    
+            <app-crop-selector
+                [selectableCrops]="selectableCrops"
+                (cropSelectedEvent)="OnCropSelected($event)"
+                
+            />
+            
+        </div>
+    
+        <div class="piechart-container">
+  
+          <app-pie-chart 
+              [chartData]="pieChartData" 
+              [currentCrop]="selectedCrop"
+          />
+          
+        </div>
+    </div>
+</div>
