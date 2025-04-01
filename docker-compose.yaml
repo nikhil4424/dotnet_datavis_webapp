@@ -8,21 +8,21 @@ services:
       context: ./datavis-frontend-csr
     ports:
     - 4200:80
-    depends_on:
-      - datavis-api
+    # depends_on:
+    #   - datavis-api
 
-  datavis-api:
-    image: datavis-api
-    restart: always
-    build:
-      context: ./datavis-api
-    ports:
-      - 5065:8080
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    depends_on:
-      postgres-db:
-        condition: service_healthy
+  # datavis-api:
+  #   image: datavis-api
+  #   restart: always
+  #   build:
+  #     context: ./datavis-api
+  #   ports:
+  #     - 5065:8080
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #   depends_on:
+  #     postgres-db:
+  #       condition: service_healthy
 
   postgres-db:
     image: postgres
