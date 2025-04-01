@@ -67,5 +67,12 @@ namespace DatavisApi.Services
 
             return cropYieldDtos;
         }
+
+        public ICollection<CountryYieldSum> GetCountryYieldSumByYearRangeAndCrop(int yearStart, int yearEnd, int cropId)
+        {
+            IQueryable<CountryYieldSum> sumYields = _cropRepository.GetCountryYieldSumByYearRangeAndCrop(yearStart, yearEnd, cropId);
+
+            return sumYields.ToList();
+        }
     }
 }
