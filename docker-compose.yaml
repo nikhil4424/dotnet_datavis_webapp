@@ -8,8 +8,8 @@ services:
       context: ./datavis-frontend-csr
     ports:
     - 4200:80
-    depends_on:
-      - datavis-api
+    # depends_on:
+    #   - datavis-api
 
   datavis-api:
     image: datavis-api
