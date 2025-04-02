@@ -40,11 +40,15 @@ public class CropRepository : ICropRepository
         return _dataContext.Years.Any(year => year.Id == yearId);
     }
 
-    public IOrderedQueryable<Year> GetYears()
+    public int GetMinYear()
     {
-        return _dataContext.Years.OrderBy(year => year.Id);
+        return _dataContext.Years.Min(y => y.Value);
     }
 
+    public int GetMaxYear()
+    {
+        return _dataContext.Years.Max(y => y.Value);
+    }
 
     public IOrderedQueryable<CropYield> GetCropYieldsByCountry(int countryId)
     {

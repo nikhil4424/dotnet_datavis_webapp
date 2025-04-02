@@ -24,8 +24,18 @@ export class DataRequestService {
   }
 
   public GetCropYieldsByCountriesAndCrop(countryIds: number[], cropId: number): Observable<ICropYield[]> {
-    var requestUrl: string = this.GenerateCropYieldRequestByCountriesAndCrop(countryIds, cropId);
+    let requestUrl: string = this.GenerateCropYieldRequestByCountriesAndCrop(countryIds, cropId);
     return this.http.get<ICropYield[]>(requestUrl);
+  }
+
+  public GetMinYearValue(){
+    let requestUrl: string = this.ROOT_URL + "years-min"
+    return this.http.get<number>(requestUrl);
+  }
+
+  public GetMaxYearValue(){
+    let requestUrl: string = this.ROOT_URL + "years-max"
+    return this.http.get<number>(requestUrl);
   }
 
   private GenerateCropYieldRequestByCountriesAndCrop(countryIds: number[], cropId: number): string {

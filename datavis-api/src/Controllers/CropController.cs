@@ -40,16 +40,28 @@ public class CropController : ControllerBase
     }
 
 
-    [HttpGet("years")]
-    [ProducesResponseType(200, Type = typeof(ICollection<YearDto>))]
-    public IActionResult GetYears()
+    [HttpGet("years-min")]
+    [ProducesResponseType(200, Type = typeof(int))]
+    public IActionResult GetMinYearValue()
     {
-        ICollection<YearDto> yearsDto = _cropService.GetYearsDto();
+        int minYearValue = _cropService.GetMinYearValue();
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(yearsDto);
+        return Ok(minYearValue);
+    }
+
+    [HttpGet("years-max")]
+    [ProducesResponseType(200, Type = typeof(int))]
+    public IActionResult GetMaxYearValue()
+    {
+        int minYearValue = _cropService.GetMaxYearValue();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        return Ok(minYearValue);
     }
 
     // Endpoint for crop yield line chart data; returns crop yield data for given countries and crop
