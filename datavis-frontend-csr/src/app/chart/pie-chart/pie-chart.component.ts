@@ -8,30 +8,7 @@ import { ICrop } from '../../interfaces/icrop';
   templateUrl: './pie-chart.component.html',
   styleUrl: './pie-chart.component.css'
 })
-export class PieChartComponent implements AfterViewInit {
-  private defaultChartData: ChartData = 
-  {
-    labels: [
-      'Red',
-      'Blue',
-      'Yellow'
-    ],
-    datasets: 
-    [
-      {
-      label: 'My First Dataset',
-      data: [300, 50, 100],
-      // backgroundColor: [
-      //   'rgb(255, 99, 132)',
-      //   'rgb(54, 162, 235)',
-      //   'rgb(255, 205, 86)'
-      // ],
-      hoverOffset: 4
-      },
-    ]
-  };
-  
-  
+export class PieChartComponent implements AfterViewInit {  
   @Input() chartData!: ChartData;
   @Input() currentCrop!: ICrop;
   @ViewChild('chartCanvas', {static:true}) private chartCanvasRef!: ElementRef<HTMLCanvasElement>;
@@ -39,7 +16,15 @@ export class PieChartComponent implements AfterViewInit {
   public chartObj!: Chart;
 
   ngAfterViewInit(): void {
-    this,this.chartObj = this.CreatePieChartObj(this.chartCanvasRef, this.defaultChartData)
+    this,this.chartObj = this.CreatePieChartObj(this.chartCanvasRef, this.chartData)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['chartData'] && !changes['chartData'].firstChange ) {
+      this.chartObj.data = this.chartData;
+      this.chartObj.options.plugins!.title!.text = "Top countries by " + this.currentCrop.name + " yields"
+      this.chartObj.update();
+    }
   }
 
   private CreatePieChartObj(
@@ -64,7 +49,7 @@ export class PieChartComponent implements AfterViewInit {
           plugins: {
             title: {
               display: true,
-              text: "Percentage of crop yields by country"
+              text: "Top countries by " + this.currentCrop.name + " yields"
             }
           }
         }
@@ -72,5 +57,4 @@ export class PieChartComponent implements AfterViewInit {
     )
     return chartObj;
   }
-
 }
