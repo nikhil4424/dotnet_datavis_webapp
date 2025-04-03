@@ -7,8 +7,8 @@
     <div class="crop-selector-body">
 
         <form class="crop-selector-form" (submit)="SubmitYears($event)">
-            <input class="year-input" type="number" name="minYear" placeholder="Start year" min="{{minSelectableYear}}" max={{maxSelectableYear}}/> 
-            <input class="year-input" type="number" name="maxYear" placeholder="End year" min="{{minSelectableYear}}" max={{maxSelectableYear}}/> 
+            <input class="year-input" type="number" name="yearStart" placeholder="Start year" min="{{minSelectableYear}}" max={{maxSelectableYear}}/> 
+            <input class="year-input" type="number" name="yearEnd" placeholder="End year" min="{{minSelectableYear}}" max={{maxSelectableYear}}/> 
             <button type="submit" value="crops">Submit years</button>
         </form>
 

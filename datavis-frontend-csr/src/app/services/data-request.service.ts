@@ -4,6 +4,7 @@ import { ICountry } from '../interfaces/icountry';
 import { Observable } from 'rxjs';
 import { ICropYield } from '../interfaces/icrop-yield';
 import { ICrop } from '../interfaces/icrop';
+import { ICountryYield } from '../interfaces/icountry-yield';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,19 @@ export class DataRequestService {
     return this.http.get<number>(requestUrl);
   }
 
+  public GetCountryYields(yearStart: number, yearEnd: number, cropId: number): Observable<ICountryYield[]>{
+    let requestUrl: string = this.ROOT_URL + "cropyields/crop/yearrange?"
+    // add yearStart to request url
+    requestUrl += "yearStart=" + yearStart + "&";
+
+    // add yearEnd to request url
+    requestUrl += "yearEnd=" + yearEnd + "&";
+    // add cropId to request url
+    requestUrl += "cropId=" + cropId;
+
+    return this.http.get<ICountryYield[]>(requestUrl);
+  }
+
   private GenerateCropYieldRequestByCountriesAndCrop(countryIds: number[], cropId: number): string {
     var requestUrl: string = this.ROOT_URL + "cropyields/countries/crop?"
     
@@ -49,4 +63,5 @@ export class DataRequestService {
 
     return requestUrl;
   }
+
 }

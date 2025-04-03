@@ -11,6 +11,9 @@ import { ICrop } from '../../interfaces/icrop';
 export class PieChartComponent implements AfterViewInit {  
   @Input() chartData!: ChartData;
   @Input() currentCrop!: ICrop;
+  @Input() currentYearStart!: number;
+  @Input() currentYearEnd!: number;
+  // canvas reference for chart
   @ViewChild('chartCanvas', {static:true}) private chartCanvasRef!: ElementRef<HTMLCanvasElement>;
 
   public chartObj!: Chart;
@@ -20,9 +23,10 @@ export class PieChartComponent implements AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // Update chart when chart data changes after first initialization
     if (changes['chartData'] && !changes['chartData'].firstChange ) {
       this.chartObj.data = this.chartData;
-      this.chartObj.options.plugins!.title!.text = "Top countries by " + this.currentCrop.name + " yields"
+      this.chartObj.options.plugins!.title!.text = "Top countries/regions by sum of " + this.currentCrop.name + " yields between " + this.currentYearStart + " and " + this.currentYearEnd;
       this.chartObj.update();
     }
   }
@@ -30,7 +34,7 @@ export class PieChartComponent implements AfterViewInit {
   private CreatePieChartObj(
     chartCanvasRef: ElementRef<HTMLCanvasElement>, 
     data: ChartData
-  ): Chart{
+  ): Chart {
     const chartCanvasHtml = chartCanvasRef.nativeElement;
 
     if (!chartCanvasHtml){
@@ -40,7 +44,7 @@ export class PieChartComponent implements AfterViewInit {
     let chartObj = new Chart(
       chartCanvasHtml,
       {
-        type: 'pie',
+        type: 'doughnut',
         data: data,
         options:
         {
