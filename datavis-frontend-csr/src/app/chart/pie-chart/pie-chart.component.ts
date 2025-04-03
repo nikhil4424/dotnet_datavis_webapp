@@ -8,44 +8,33 @@ import { ICrop } from '../../interfaces/icrop';
   templateUrl: './pie-chart.component.html',
   styleUrl: './pie-chart.component.css'
 })
-export class PieChartComponent implements AfterViewInit {
-  private defaultChartData: ChartData = 
-  {
-    labels: [
-      'Red',
-      'Blue',
-      'Yellow'
-    ],
-    datasets: 
-    [
-      {
-      label: 'My First Dataset',
-      data: [300, 50, 100],
-      // backgroundColor: [
-      //   'rgb(255, 99, 132)',
-      //   'rgb(54, 162, 235)',
-      //   'rgb(255, 205, 86)'
-      // ],
-      hoverOffset: 4
-      },
-    ]
-  };
-  
-  
+export class PieChartComponent implements AfterViewInit {  
   @Input() chartData!: ChartData;
   @Input() currentCrop!: ICrop;
+  @Input() currentYearStart!: number;
+  @Input() currentYearEnd!: number;
+  // canvas reference for chart
   @ViewChild('chartCanvas', {static:true}) private chartCanvasRef!: ElementRef<HTMLCanvasElement>;
 
   public chartObj!: Chart;
 
   ngAfterViewInit(): void {
-    this,this.chartObj = this.CreatePieChartObj(this.chartCanvasRef, this.defaultChartData)
+    this,this.chartObj = this.CreatePieChartObj(this.chartCanvasRef, this.chartData)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Update chart when chart data changes after first initialization
+    if (changes['chartData'] && !changes['chartData'].firstChange ) {
+      this.chartObj.data = this.chartData;
+      this.chartObj.options.plugins!.title!.text = "Top countries/regions by sum of " + this.currentCrop.name + " yields between " + this.currentYearStart + " and " + this.currentYearEnd;
+      this.chartObj.update();
+    }
   }
 
   private CreatePieChartObj(
     chartCanvasRef: ElementRef<HTMLCanvasElement>, 
     data: ChartData
-  ): Chart{
+  ): Chart {
     const chartCanvasHtml = chartCanvasRef.nativeElement;
 
     if (!chartCanvasHtml){
@@ -55,7 +44,7 @@ export class PieChartComponent implements AfterViewInit {
     let chartObj = new Chart(
       chartCanvasHtml,
       {
-        type: 'pie',
+        type: 'doughnut',
         data: data,
         options:
         {
@@ -64,7 +53,7 @@ export class PieChartComponent implements AfterViewInit {
           plugins: {
             title: {
               display: true,
-              text: "Percentage of crop yields by country"
+              text: "Top countries by " + this.currentCrop.name + " yields"
             }
           }
         }
@@ -72,5 +61,4 @@ export class PieChartComponent implements AfterViewInit {
     )
     return chartObj;
   }
-
 }

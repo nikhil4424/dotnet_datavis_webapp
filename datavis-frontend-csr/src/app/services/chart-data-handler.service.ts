@@ -1,6 +1,8 @@
 import { Injectable, output } from '@angular/core';
 import { ICropYield } from '../interfaces/icrop-yield';
 import { Chart, ChartConfiguration, ChartData, ChartDataset } from 'chart.js';
+import { ICountry } from '../interfaces/icountry';
+import { ICountryYield } from '../interfaces/icountry-yield';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ export class ChartDataHandlerService {
 
   constructor() { }
 
-  public EXAMPLE_DATA: ICropYield[] = 
+  public EXAMPLE_LINECHART_DATA: ICropYield[] = 
   [
     {
       "id": 110,
@@ -41,6 +43,68 @@ export class ChartDataHandlerService {
     }
   ];
 
+  public EXAMPLE_PIECHART_DATA: ICountryYield[] = [
+    {
+      "name": "Oceania",
+      "total_yield": 38.1000573
+    },
+    {
+      "name": "Oceania (FAO)",
+      "total_yield": 38.0999998
+    },
+    {
+      "name": "Australia",
+      "total_yield": 38.0999998
+    },
+    {
+      "name": "Croatia",
+      "total_yield": 28.1135997
+    },
+    {
+      "name": "United Arab Emirates",
+      "total_yield": 25.0542998
+    },
+    {
+      "name": "Jordan",
+      "total_yield": 24.4799995
+    },
+    {
+      "name": "Lebanon",
+      "total_yield": 24.2380994
+    },
+    {
+      "name": "Northern America (FAO)",
+      "total_yield": 19.0386995
+    },
+    {
+      "name": "United States",
+      "total_yield": 19.0386995
+    },
+    {
+      "name": "North America",
+      "total_yield": 19.0370452
+    },
+    {
+      "name": "Americas (FAO)",
+      "total_yield": 18.7659998
+    },
+    {
+      "name": "Pakistan",
+      "total_yield": 15.9825997
+    },
+    {
+      "name": "Israel",
+      "total_yield": 15.9335996
+    },
+    {
+      "name": "Uzbekistan",
+      "total_yield": 15.5853
+    },
+    {
+      "name": "Other",
+      "total_yield": 458.600131982
+    }
+  ]
 
   public GetLineChartDataFromCropYield(cropYieldData: ICropYield[]): ChartData{
     let outputData: ChartData = 
@@ -67,6 +131,30 @@ export class ChartDataHandlerService {
         countryCropYieldDataset
       );
     }
+
+    return outputData;
+  }
+
+  public GetPieChartDataFromApiCropYearRange(countryYields: ICountryYield[]): ChartData {
+    // Pie chart uses a single ChartDataset
+    let outputData: ChartData = 
+    {
+      labels: [], // ICountryYield.name values
+      datasets: 
+      [
+        // ChartDataset
+        { 
+          label: 'Yield in tonnes/hectare',
+          data: [] , // ICountryYield.total_yield values
+        }
+      ] 
+    }
+
+    let chartCountryLabels: string[] = countryYields.map((cy) => cy.name);
+    outputData.labels = chartCountryLabels;
+    
+    let chartCountryYields: number[] = countryYields.map((cy) => cy.total_yield);
+    outputData.datasets[0].data = chartCountryYields;
 
     return outputData;
   }
@@ -98,5 +186,4 @@ export class ChartDataHandlerService {
 
     return output;
   }
-    
 }

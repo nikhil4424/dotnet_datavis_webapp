@@ -49,6 +49,20 @@ export class LineChartComponent  implements AfterViewInit{
         {
           responsive: true,
           maintainAspectRatio: true,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Year'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Crop yield (tonnes/hectare)'
+              }
+            }
+          },
           plugins: {
             title: {
               display: true,

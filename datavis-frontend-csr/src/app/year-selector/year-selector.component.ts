@@ -10,6 +10,7 @@ import { DataRequestService } from '../services/data-request.service';
 export class YearSelectorComponent {
   minSelectableYear!: number;
   maxSelectableYear!: number;
+  
 
   @Output() yearsSelectedEvent = new EventEmitter<FormData>();
 
