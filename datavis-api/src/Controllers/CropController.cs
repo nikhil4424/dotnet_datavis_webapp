@@ -40,16 +40,28 @@ public class CropController : ControllerBase
     }
 
 
-    [HttpGet("years")]
-    [ProducesResponseType(200, Type = typeof(ICollection<YearDto>))]
-    public IActionResult GetYears()
+    [HttpGet("years-min")]
+    [ProducesResponseType(200, Type = typeof(int))]
+    public IActionResult GetMinYearValue()
     {
-        ICollection<YearDto> yearsDto = _cropService.GetYearsDto();
+        int minYearValue = _cropService.GetMinYearValue();
 
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        return Ok(yearsDto);
+        return Ok(minYearValue);
+    }
+
+    [HttpGet("years-max")]
+    [ProducesResponseType(200, Type = typeof(int))]
+    public IActionResult GetMaxYearValue()
+    {
+        int minYearValue = _cropService.GetMaxYearValue();
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        return Ok(minYearValue);
     }
 
     // Endpoint for crop yield line chart data; returns crop yield data for given countries and crop
@@ -70,19 +82,13 @@ public class CropController : ControllerBase
     }
 
     // Endpoint for crop yield pie chart data
-    [HttpGet("cropyields/yearrange/crop")]
-    [ProducesResponseType(200, Type = typeof(ICollection<CropYieldDto>))]
-    public IActionResult GetCropYieldsWithinYearRangeByCrop
-    (
-        [FromQuery] int yearStart,
-        [FromQuery] int yearEnd,
-        [FromQuery] int cropId
-    )
+    [HttpGet("cropyields/crop/yearrange")]
+    [ProducesResponseType(200, Type = typeof(ICollection<CountryYieldSum>))]
+    public IActionResult GetCountryYieldSumByYearRangeAndCrop(int yearStart, int yearEnd, int cropId)
     {
-        ICollection<CropYieldDto> cropYieldsDto = _cropService.GetCropYieldsDtoWithinYearRangeByCrop(yearStart, yearEnd, cropId);
-
+        ICollection<CountryYieldSum> countryYields = _cropService.GetCountryYieldSumByYearRangeAndCrop(yearStart, yearEnd, cropId);
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        return Ok(cropYieldsDto);
+        return Ok(countryYields);
     }
 }

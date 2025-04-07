@@ -7,8 +7,7 @@ public partial class CropDataContext : DbContext
 {
     public CropDataContext(DbContextOptions<CropDataContext> options)
         : base(options)
-    {
-    }
+    { }
 
     public virtual DbSet<Country> Countries { get; set; }
 
@@ -19,6 +18,7 @@ public partial class CropDataContext : DbContext
     public virtual DbSet<Year> Years { get; set; }
 
     public virtual DbSet<YieldsView> YieldsViews { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

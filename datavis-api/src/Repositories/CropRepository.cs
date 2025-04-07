@@ -2,7 +2,6 @@ using DatavisApi.Interfaces;
 using DatavisApi.Data;
 using DatavisApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace DatavisApi.Repository;
 
@@ -41,11 +40,15 @@ public class CropRepository : ICropRepository
         return _dataContext.Years.Any(year => year.Id == yearId);
     }
 
-    public IOrderedQueryable<Year> GetYears()
+    public int GetMinYear()
     {
-        return _dataContext.Years.OrderBy(year => year.Id);
+        return _dataContext.Years.Min(y => y.Value);
     }
 
+    public int GetMaxYear()
+    {
+        return _dataContext.Years.Max(y => y.Value);
+    }
 
     public IOrderedQueryable<CropYield> GetCropYieldsByCountry(int countryId)
     {
@@ -91,8 +94,48 @@ public class CropRepository : ICropRepository
                 cy.Year.Value >= yearStart &&
                 cy.Year.Value <= yearEnd &&
                 cy.Crop.Id == cropId
-            ).OrderBy(cy => cy.Id);
+            ).OrderByDescending(cy => cy.Id);
 
         return cropYields;
+    }
+
+    public IQueryable<CountryYieldSum> GetCountryYieldSumByYearRangeAndCrop(int yearStart, int yearEnd, int cropId)
+    {
+        string sqlQuery =
+            $"""        
+            WITH top_countries AS (
+                SELECT country.name, SUM(cy.value) AS total_yield
+                FROM crop_yield cy
+                    JOIN year ON year.id = cy.year_id
+                    JOIN crop ON crop.id = cy.crop_id
+                    JOIN country ON country.id = cy.country_id
+                WHERE
+                    crop.id = {cropId} AND
+                    year.value BETWEEN {yearStart} AND {yearEnd}
+                GROUP BY country.name
+                ORDER BY total_yield DESC
+                LIMIT 14
+            ),
+            other_countries AS (
+                SELECT SUM(cy.value) AS total_yield
+                FROM crop_yield cy
+                    JOIN year ON year.id = cy.year_id
+                    JOIN crop ON crop.id = cy.crop_id
+                    JOIN country ON country.id = cy.country_id
+                WHERE
+                    crop.id = {cropId} AND
+                    year.value BETWEEN {yearStart} AND {yearEnd} AND
+                    country.name NOT IN (SELECT name FROM top_countries)
+            )
+            SELECT name, total_yield
+            FROM top_countries
+            UNION ALL
+            SELECT 'Other', total_yield
+            FROM other_countries;
+            """;
+
+        IQueryable<CountryYieldSum> sumYields = _dataContext.Database.SqlQueryRaw<CountryYieldSum>(sqlQuery);
+
+        return sumYields;
     }
 }

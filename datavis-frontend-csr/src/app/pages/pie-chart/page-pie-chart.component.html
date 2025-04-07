@@ -6,6 +6,10 @@
             <app-crop-selector
                 (cropSelectedEvent)="OnCropSelected($event)"
             />
+
+            <app-year-selector
+                (yearsSelectedEvent)="OnYearsSelected($event)"
+            />
             
         </div>
     
@@ -14,6 +18,8 @@
           <app-pie-chart 
               [chartData]="pieChartData" 
               [currentCrop]="selectedCrop"
+              [currentYearStart]="selectedYearStart"
+              [currentYearEnd]="selectedYearEnd"
           />
           
         </div>

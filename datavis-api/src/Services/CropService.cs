@@ -35,15 +35,16 @@ namespace DatavisApi.Services
             return cropsDto;
         }
 
-        public ICollection<YearDto> GetYearsDto()
+        public int GetMinYearValue()
         {
-            IOrderedQueryable<Year> years = _cropRepository.GetYears();
+            int year = _cropRepository.GetMinYear();
+            return year;
+        }
 
-            ICollection<YearDto> yearsDto = years.Select(year =>
-                Helpers.ModelToDto.YearToDto(year))
-                .ToList();
-
-            return yearsDto;
+        public int GetMaxYearValue()
+        {
+            int year = _cropRepository.GetMaxYear();
+            return year;
         }
 
         public ICollection<CropYieldDto> GetCropYieldsDtoByCountriesAndCrop(int[] countryIds, int cropId)
@@ -66,6 +67,13 @@ namespace DatavisApi.Services
                 .ToList();
 
             return cropYieldDtos;
+        }
+
+        public ICollection<CountryYieldSum> GetCountryYieldSumByYearRangeAndCrop(int yearStart, int yearEnd, int cropId)
+        {
+            IQueryable<CountryYieldSum> sumYields = _cropRepository.GetCountryYieldSumByYearRangeAndCrop(yearStart, yearEnd, cropId);
+
+            return sumYields.ToList();
         }
     }
 }
