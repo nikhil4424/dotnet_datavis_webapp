@@ -5,11 +5,11 @@
     </div>
 
     <div id="crop-selector-body">
-
+        
         <form id="crop-selector-form" (submit)="submitCrop($event)">
             
             <button type="submit" value="crops">Submit crop</button>
-
+            
             @for (crop of selectableCrops; track $index) {
                 <div class="crop-selector-item">
                     <input type="radio" name="crops" id={{crop.name}} value="{{crop.id}}" [checked]="$index === 0" />
@@ -17,8 +17,5 @@
                 </div>
             }
         </form>
-
     </div>
 </div>
-
-<!-- <p>crop-selector works!</p> -->
