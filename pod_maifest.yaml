@@ -71,7 +71,7 @@ spec:
     spec:
       containers:
       - name: datavis-api
-        image: nikhil4424/datavis-api
+        image: nikhil4424/datavis-api:1
         env:
         - name: POSTGRES_USER
           value: "postgres"
@@ -115,7 +115,7 @@ spec:
     spec:
       containers:
       - name: datavis-frontend
-        image: nikhil4424/datavis-frontend
+        image: nikhil4424/datavis-frontend:1
         env:
         - name: API_URL
           value: "http://datavis-api:8000"
