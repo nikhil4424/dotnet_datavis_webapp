@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-db
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres-db
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-db
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+      - name: postgres-db
+        image: postgres:16
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_DB
+          value: "crop_yield"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-data
+        emptyDir: {}   
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datavis-api
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: datavis-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datavis-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datavis-api
+  template:
+    metadata:
+      labels:
+        app: datavis-api
+    spec:
+      containers:
+      - name: datavis-api
+        image: nikhil4424/datavis-api
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_DB
+          value: "crop_yield"
+        - name: POSTGRES_HOST
+          value: "postgres-db"
+        - name: POSTGRES_PORT
+          value: "5432"
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: datavis-frontend
+spec:
+  type: NodePort 
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080
+  selector:
+    app: datavis-frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datavis-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datavis-frontend
+  template:
+    metadata:
+      labels:
+        app: datavis-frontend
+    spec:
+      containers:
+      - name: datavis-frontend
+        image: nikhil4424/datavis-frontend
+        env:
+        - name: API_URL
+          value: "http://datavis-api:8000"
+        ports:
+        - containerPort: 80
